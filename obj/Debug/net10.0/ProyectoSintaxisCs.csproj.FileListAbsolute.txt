@@ -1,0 +1,14 @@
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.AssemblyInfoInputs.cache
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.AssemblyInfo.cs
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.csproj.CoreCompileInputs.cache
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\bin\Debug\net10.0\ProyectoSintaxisCs.exe
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\bin\Debug\net10.0\ProyectoSintaxisCs.deps.json
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\bin\Debug\net10.0\ProyectoSintaxisCs.runtimeconfig.json
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\bin\Debug\net10.0\ProyectoSintaxisCs.dll
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\bin\Debug\net10.0\ProyectoSintaxisCs.pdb
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.dll
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\refint\ProyectoSintaxisCs.dll
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.pdb
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.genruntimeconfig.cache
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ref\ProyectoSintaxisCs.dll
