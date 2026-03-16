@@ -24,21 +24,42 @@ public static class Program
             switch (opcion)
             {
                 case 1:
+                    Console.Clear();
                     Console.WriteLine("ingresando a Libros...");
+                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 2:
+                    Console.Clear();
                     Console.WriteLine("ingresando a Usuarios...");
+                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 3:
+                    Console.Clear();
                     Console.WriteLine("ingresando a Préstamos...");
+                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 4:
+                    Console.Clear();
                     Console.WriteLine("ingresando a Busquedas y reportes...");
+                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 5:
+                    Console.Clear();
                     Console.WriteLine("ingresando a Guardar / cargar datos...");
+                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                 case 0:
+                    Console.Clear();
                     Console.WriteLine("Saliendo del programa...");
                     break;
                 default:
