@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 public static class Program
 {
-    public static void Main()
+    public static void MostrarMenuLibros()
     {   
         List<string> libros = new List<string> {"cien años de soledad", "el hobbit", "harry potter"};
         List<bool> prestados = new List<bool> { false, false, true };
