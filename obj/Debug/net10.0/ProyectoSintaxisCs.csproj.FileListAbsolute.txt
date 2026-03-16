@@ -1,0 +1,4 @@
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.AssemblyInfoInputs.cache
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.AssemblyInfo.cs
+C:\Users\navar\.templateengine\ProyectoSintaxisCs\obj\Debug\net10.0\ProyectoSintaxisCs.csproj.CoreCompileInputs.cache
