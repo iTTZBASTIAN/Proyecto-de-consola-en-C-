@@ -1,141 +1,256 @@
+
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public static class Program
 {
-    static List<string> usuarios = new List<string> { "Jose", "Joseluis", "Karim" };
-    static List<string> contactos = new List<string> { "305-457820", "314-34566", "315-467752" };
-    static List<bool> activos = new List<bool> { true, true, true }; 
-
+    static List<string> libros = new List<string> {"cien años de soledad", "el hobbit", "harry potter"};
+    static List<bool> prestados = new List<bool> { false, false, true };
+    
     public static void Main()
     {
-        int opcionUsuario = -1; 
+
+        int opcion;
+
+            do
+            {
+                Console.WriteLine("================ MENU PRINCIPAL ================");
+                Console.WriteLine("1. Libros");
+                Console.WriteLine("2. Usuarios");
+                Console.WriteLine("3. Préstamos");
+                Console.WriteLine("4. Busquedas y reportes");
+                Console.WriteLine("5. Guardar / cargar datos");
+                Console.WriteLine("0. Salir");
+                Console.Write("Selecciona una opción: ");
+
+                opcion = Convert.ToInt32(Console.ReadLine());
+
+                switch (opcion)
+                {
+                    case 1:
+                        Console.Clear();
+                        MostrarMenuLibros();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("ingresando a Usuarios...");
+                        Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("ingresando a Prestamos...");
+                        Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                    case 4: 
+                        Console.Clear();
+                        Console.WriteLine("ingresando a Busquedas y reportes...");
+                        Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                    case 5: 
+                        Console.Clear();
+                        Console.WriteLine("ingresando a Guardar / cargar datos...");
+                        Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                    case 0:
+                        Console.Clear();
+                        Console.WriteLine("Volver al menú principal");
+                        break;
+                    default:
+                        Console.WriteLine("Opción no válida. Inténtalo de nuevo.");
+                        break;
+                }
+            } while (opcion != 0);
+        }
+            
+    public static void MostrarMenuLibros()
+    {   
+        int opcionLibros;
 
         do
         {
-            Console.WriteLine("================ USUARIO ================");
-            Console.WriteLine("1. Registrar Usuario");
-            Console.WriteLine("2. Listar Usuarios");
-            Console.WriteLine("3. Ver detalle (por ID / documento)");
-            Console.WriteLine("4. Actualizar usuario");
-            Console.WriteLine("5. Eliminar usuario");
+            Console.WriteLine("================ LIBROS ================");
+            Console.WriteLine("1. Registrar libro");
+            Console.WriteLine("2. Listar libros");
+            Console.WriteLine("3. Ver detalle (por ID/ISBN)");
+            Console.WriteLine("4. Actualizar libro");
+            Console.WriteLine("5. Eliminar libro");
             Console.WriteLine("0. Volver al menú principal");
             Console.Write("Selecciona una opción: ");
 
-            if (!int.TryParse(Console.ReadLine(), out opcionUsuario))
+            opcionLibros = Convert.ToInt32(Console.ReadLine());
+
+            switch (opcionLibros)
             {
-                Console.WriteLine("Por favor, ingresa un número válido.");
-                continue;
-            }
-
-            switch (opcionUsuario)
-            {
-                case 1: 
-                    Console.Write("Escribe el nombre del nuevo usuario: ");
-                    string nuevoUsuario = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(nuevoUsuario))
+                case 1:
+                    Console.Write("Escribe el nombre del nuevo libro: ");
+                    string nuevoLibro = Console.ReadLine();
+                    
+                    if (!string.IsNullOrWhiteSpace(nuevoLibro))
                     {
-                        usuarios.Add(nuevoUsuario);
-                        contactos.Add("Sin contacto");
-                        activos.Add(true);
-                        Console.WriteLine("¡Usuario registrado con éxito!");
-                    }
-                    break;
-
-                case 2:
-                    Console.Clear();
-                    Console.WriteLine("\n--- Lista de Usuarios ---");
-                    for (int i = 0; i < usuarios.Count; i++)
-                    {
-
-                        string estado = activos[i] ? "[Activo]" : "[Inactivo]";
-                        Console.WriteLine($"{i + 1}. {usuarios[i]} - {contactos[i]} {estado}");
-                    }
-                    break;
-
-                case 3:
-                    Console.Clear();
-                    if (usuarios.Count == 0)
-                    {
-                        Console.WriteLine("No hay usuarios registrados.");
+                        libros.Add(nuevoLibro);
+                        Console.WriteLine("¡Libro registrado con éxito!");
                     }
                     else
                     {
-                        Console.Write($"Ingresa el ID (1 al {usuarios.Count}): ");
-                        if (int.TryParse(Console.ReadLine(), out int idBuscado))
-                        {
-                            int indice = idBuscado - 1;
-                            if (indice >= 0 && indice < usuarios.Count)
-                            {
-
-                                Console.WriteLine("\n------------------------------------");
-                                Console.WriteLine($"ID: {idBuscado}");
-                                Console.WriteLine($"Usuario:  {usuarios[indice].ToUpper()}");
-                                Console.WriteLine($"Contacto: {contactos[indice]}");
-                                Console.WriteLine($"Estado:   {(activos[indice] ? "Activo" : "Inactivo")}");
-                                Console.WriteLine("------------------------------------");
-                            }
-                        }
+                        Console.WriteLine("El nombre no puede estar vacío.");
                     }
                     break;
-
-                case 4:
+                case 2:
                     Console.Clear();
-                    Console.WriteLine("========== ACTUALIZAR USUARIO ==========");
-                    for (int i = 0; i < usuarios.Count; i++)
+                    Console.WriteLine("\n--- Lista de Libros ---");
+                    Console.WriteLine("1. listar todos");
+                    Console.WriteLine("2. listar disponibles");
+                    Console.WriteLine("3. Listar prestados");
+                    Console.WriteLine("selecciona una opcion");
+                    string subOpcion = Console.ReadLine();
+                    
+                    for (int i = 0; i < libros.Count; i++)
                     {
-                        Console.WriteLine($"{i + 1}. {usuarios[i]}");
-                    }
-
-                    Console.Write("\nID a editar: ");
-                    if (int.TryParse(Console.ReadLine(), out int idEditar))
-                    {
-                        int indice = idEditar - 1;
-                        if (indice >= 0 && indice < usuarios.Count)
+                        if (subOpcion == "1")
                         {
-                            Console.WriteLine("1. Nombre | 2. Contacto | 3. Estado | 0. Salir");
-                            string subOpcion = Console.ReadLine();
-                            switch (subOpcion)
-                            {
-                                case "1":
-                                    Console.Write("Nuevo nombre: ");
-                                    usuarios[indice] = Console.ReadLine();
-                                    break;
-                                case "2":
-                                    Console.Write("Nuevo contacto: ");
-                                    contactos[indice] = Console.ReadLine();
-                                    break;
-                                case "3":
-                                    activos[indice] = !activos[indice];
-                                    Console.WriteLine("Estado cambiado.");
-                                    break;
-                            }
+                            string estado = prestados[i] ? "[P]" : "[D]";
+                            Console.WriteLine($"{i + 1}. {libros[i]} {estado}");
+                        }
+                        else if (subOpcion == "2" && prestados[i] == false)
+                        {
+                            Console.WriteLine($"{i + 1}. {libros[i]} [Disponible]");
+                        }
+                        else if (subOpcion == "3" && prestados[i] == true)
+                        {
+                            Console.WriteLine($"{i + 1}. {libros[i]} [Prestado]");
                         }
                     }
                     Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                     Console.ReadKey();
                     Console.Clear();
                     break;
+                case 3:
+                Console.Clear();
+                Console.WriteLine("========== DETALLE DEL LIBRO ==========");
+    
+                if (libros.Count == 0)
+                {
+                    Console.WriteLine("No hay libros registrados en el sistema.");
+                }
+                else
+                {
+                    Console.Write($"Ingresa el ID del libro (1 al {libros.Count}): ");
+                if (int.TryParse(Console.ReadLine(), out int idBuscado))
+                {
+                    int indice = idBuscado - 1;
+
+                    if (indice >= 0 && indice < libros.Count)
+                    {
+                    string estado = prestados[indice] ? "Prestado" : "Disponible";
+                    
+                    Console.WriteLine("\n------------------------------------");
+                    Console.WriteLine($"ID/ISBN: {idBuscado}");
+                    Console.WriteLine($"Título:  {libros[indice].ToUpper()}");
+                    Console.WriteLine($"Estado:  {estado}");
+                    Console.WriteLine("------------------------------------");
+                    }
+                else
+                {
+                    Console.WriteLine("Error: El ID ingresado no existe.");
+                }
+                }
+                else
+                {
+                    Console.WriteLine("Error: Por favor, ingresa un número válido.");
+                }
+                }
+
+                Console.WriteLine("\nPresiona cualquier tecla para volver...");
+                Console.ReadKey();
+                Console.Clear();
+                break;
+
+            case 4:
+                Console.Clear();
+                Console.WriteLine("========== ACTUALIZAR LIBRO ==========");
+
+                for (int i = 0; i < libros.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {libros[i]}");
+                }
+
+                Console.Write("\nIngresa el ID del libro que deseas editar: ");
+                if (int.TryParse(Console.ReadLine(), out int idEditar))
+                {
+                    int indice = idEditar - 1;
+
+                    if (indice >= 0 && indice < libros.Count)
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"Editando: {libros[indice].ToUpper()}");
+                        Console.WriteLine("1. Cambiar título");
+                        Console.WriteLine("2. Cambiar estado (Disponible/Prestado)");
+                        Console.WriteLine("0. Cancelar");
+                        Console.Write("Selecciona qué deseas hacer: ");
+                        
+                        string subOpcionEdit = Console.ReadLine();
+
+                        switch (subOpcionEdit)
+                        {
+                            case "1":
+                                Console.Write("Ingresa el nuevo título: ");
+                                string nuevoTitulo = Console.ReadLine();
+                                if (!string.IsNullOrWhiteSpace(nuevoTitulo))
+                                {
+                                    libros[indice] = nuevoTitulo;
+                                    Console.WriteLine("¡Título actualizado!");
+                                }
+                                break;
+
+                            case "2":
+
+                                prestados[indice] = !prestados[indice]; 
+                                string nuevoEstado = prestados[indice] ? "Prestado" : "Disponible";
+                                Console.WriteLine($"¡Estado cambiado a {nuevoEstado}!");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: El ID no existe.");
+                    }
+                }
+                
+                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                    Console.ReadKey();
+                    Console.Clear();
+    
+                    break;
                 case 5:
                     Console.Clear();
-                    Console.WriteLine("======= ELIMINAR USUARIO =======");
-                    Console.WriteLine("Validar no permitir si tiene préstamos activos");
+                    Console.WriteLine("======== ELIMINAR LIBRO ========");
+                    Console.WriteLine("Validar no permitir si está prestado...");
+
                     Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                     Console.ReadKey();
                     Console.Clear();
                     break;
                 case 0:
-                    Console.WriteLine("Saliendo...");
+
+                    Console.Clear();
+                    Console.WriteLine("Saliendo del programa...");
+                    break;
+                default:
+                    Console.WriteLine("Opción no válida. Inténtalo de nuevo.");
                     break;
             }
-
-            if (opcionUsuario != 0)
-            {
-                Console.WriteLine("\nPresiona una tecla para continuar...");
-                Console.ReadKey();
-                Console.Clear();
-            }
-
-        } while (opcionUsuario != 0);
+        } while (opcionLibros !=0);
     }
 }
+
+
