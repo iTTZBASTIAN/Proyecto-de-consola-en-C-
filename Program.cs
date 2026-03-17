@@ -1,17 +1,15 @@
-
-
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 public static class Program
 {
-    static List<string> usuarios = new List<string> {"Jose", "Joseluis", "Karim"};
-    static List<string> contactoUsuario = new List<string> { "305-457820", "314-34566", "315-467752" };
-    
-    public static void MostrarMenuUsuario()
-    {   
-        int opcionUsuario;
+    static List<string> usuarios = new List<string> { "Jose", "Joseluis", "Karim" };
+    static List<string> contactos = new List<string> { "305-457820", "314-34566", "315-467752" };
+    static List<bool> activos = new List<bool> { true, true, true }; 
+
+    public static void Main()
+    {
+        int opcionUsuario = -1; 
 
         do
         {
@@ -24,156 +22,120 @@ public static class Program
             Console.WriteLine("0. Volver al menú principal");
             Console.Write("Selecciona una opción: ");
 
-            opcionUsuario = Convert.ToInt32(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out opcionUsuario))
+            {
+                Console.WriteLine("Por favor, ingresa un número válido.");
+                continue;
+            }
 
             switch (opcionUsuario)
             {
-                case 1:
+                case 1: 
                     Console.Write("Escribe el nombre del nuevo usuario: ");
                     string nuevoUsuario = Console.ReadLine();
-                    
                     if (!string.IsNullOrWhiteSpace(nuevoUsuario))
                     {
                         usuarios.Add(nuevoUsuario);
+                        contactos.Add("Sin contacto");
+                        activos.Add(true);
                         Console.WriteLine("¡Usuario registrado con éxito!");
                     }
-                    else
-                    {
-                        Console.WriteLine("El nombre no puede estar vacío.");
-                    }
                     break;
+
                 case 2:
                     Console.Clear();
                     Console.WriteLine("\n--- Lista de Usuarios ---");
                     for (int i = 0; i < usuarios.Count; i++)
                     {
-                        if (opcionUsuario == "1")
-                        {
-                            Console.WriteLine($"{i + 1}. {usuarios[i]} {contactoUsuario}");
-                        }
+
+                        string estado = activos[i] ? "[Activo]" : "[Inactivo]";
+                        Console.WriteLine($"{i + 1}. {usuarios[i]} - {contactos[i]} {estado}");
                     }
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-                    Console.ReadKey();
-                    Console.Clear();
                     break;
+
                 case 3:
-                Console.Clear();
-                Console.WriteLine("========== DETALLE DEL USUARIO ==========");
-    
-                if (usuarios.Count == 0)
-                {
-                    Console.WriteLine("No hay usuarios registrados en el sistema.");
-                }
-                else
-                {
-                    Console.Write($"Ingresa el ID del usuario (1 al {usuarios.Count}): ");
-                if (int.TryParse(Console.ReadLine(), out int idBuscado))
-                {
-                    int indice = idBuscado - 1;
-
-                    if (indice >= 0 && indice < usuarios.Count)
+                    Console.Clear();
+                    if (usuarios.Count == 0)
                     {
-                    string contactoUsuario = contacto[indice];
-                    
-                    Console.WriteLine("\n------------------------------------");
-                    Console.WriteLine($"ID/ISBN: {idBuscado}");
-                    Console.WriteLine($"Usuario:  {usuarios[indice].ToUpper()}");
-                    Console.WriteLine($"Estado:  {contactoUsuario}");
-                    Console.WriteLine("------------------------------------");
-                    }
-                else
-                {
-                    Console.WriteLine("Error: El ID ingresado no existe.");
-                }
-                }
-                else
-                {
-                    Console.WriteLine("Error: Por favor, ingresa un número válido.");
-                }
-                }
-
-                Console.WriteLine("\nPresiona cualquier tecla para volver...");
-                Console.ReadKey();
-                Console.Clear();
-                break;
-
-            case 4:
-                Console.Clear();
-                Console.WriteLine("========== ACTUALIZAR USUARIO ==========");
-
-                for (int i = 0; i < usuarios.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {usuarios[i]}");
-                }
-
-                Console.Write("\nIngresa el ID del usuario que deseas editar: ");
-                if (int.TryParse(Console.ReadLine(), out int idEditar))
-                {
-                    int indice = idEditar - 1;
-
-                    if (indice >= 0 && indice < usuarios.Count)
-                    {
-                        Console.Clear();
-                        Console.WriteLine($"Editando: {usuarios[indice].ToUpper()}");
-                        Console.WriteLine("1. Cambiar nombre de usuario");
-                        Console.WriteLine("2. Editar contacto");
-                        Console.WriteLine("0. Cancelar");
-                        Console.Write("Selecciona qué deseas hacer: ");
-                        
-                        string subOpcionEdit = Console.ReadLine();
-
-                        switch (subOpcionEdit)
-                        {
-                            case "1":
-                                Console.Write("Ingresa el nuevo título: ");
-                                string nuevoNombre = Console.ReadLine();
-                                if (!string.IsNullOrWhiteSpace(nuevoNombre))
-                                {
-                                    usuarios[indice] = nuevoNombre;
-                                    Console.WriteLine("¡Nombre de usuario actualizado!");
-                                }
-                                break;
-
-                            case "2":
-
-                                contacto[indice] = !contacto[indice]; 
-                                string nuevoContactoUsuario = contacto[indice] ? "Acitvo" : "Desconectado";
-                                Console.WriteLine($"¡Estado cambiado a {nuevoContactoUsuario}!");
-                                break;
-                        }
+                        Console.WriteLine("No hay usuarios registrados.");
                     }
                     else
                     {
-                        Console.WriteLine("Error: El ID no existe.");
+                        Console.Write($"Ingresa el ID (1 al {usuarios.Count}): ");
+                        if (int.TryParse(Console.ReadLine(), out int idBuscado))
+                        {
+                            int indice = idBuscado - 1;
+                            if (indice >= 0 && indice < usuarios.Count)
+                            {
+
+                                Console.WriteLine("\n------------------------------------");
+                                Console.WriteLine($"ID: {idBuscado}");
+                                Console.WriteLine($"Usuario:  {usuarios[indice].ToUpper()}");
+                                Console.WriteLine($"Contacto: {contactos[indice]}");
+                                Console.WriteLine($"Estado:   {(activos[indice] ? "Activo" : "Inactivo")}");
+                                Console.WriteLine("------------------------------------");
+                            }
+                        }
                     }
-                }
-                
+                    break;
+
+                case 4:
+                    Console.Clear();
+                    Console.WriteLine("========== ACTUALIZAR USUARIO ==========");
+                    for (int i = 0; i < usuarios.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {usuarios[i]}");
+                    }
+
+                    Console.Write("\nID a editar: ");
+                    if (int.TryParse(Console.ReadLine(), out int idEditar))
+                    {
+                        int indice = idEditar - 1;
+                        if (indice >= 0 && indice < usuarios.Count)
+                        {
+                            Console.WriteLine("1. Nombre | 2. Contacto | 3. Estado | 0. Salir");
+                            string subOpcion = Console.ReadLine();
+                            switch (subOpcion)
+                            {
+                                case "1":
+                                    Console.Write("Nuevo nombre: ");
+                                    usuarios[indice] = Console.ReadLine();
+                                    break;
+                                case "2":
+                                    Console.Write("Nuevo contacto: ");
+                                    contactos[indice] = Console.ReadLine();
+                                    break;
+                                case "3":
+                                    activos[indice] = !activos[indice];
+                                    Console.WriteLine("Estado cambiado.");
+                                    break;
+                            }
+                        }
+                    }
                     Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                     Console.ReadKey();
                     Console.Clear();
-    
                     break;
                 case 5:
                     Console.Clear();
-                    Console.WriteLine("======== ELIMINAR LIBRO ========");
-                    Console.WriteLine("Validar no permitir si está prestado...");
-
+                    Console.WriteLine("======= ELIMINAR USUARIO =======");
+                    Console.WriteLine("Validar no permitir si tiene préstamos activos");
                     Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                     Console.ReadKey();
                     Console.Clear();
                     break;
                 case 0:
-
-                    Console.Clear();
-                    Console.WriteLine("Saliendo del programa...");
-                    break;
-                default:
-                    Console.WriteLine("Opción no válida. Inténtalo de nuevo.");
+                    Console.WriteLine("Saliendo...");
                     break;
             }
-        } while (opcionUsuario !=0);
+
+            if (opcionUsuario != 0)
+            {
+                Console.WriteLine("\nPresiona una tecla para continuar...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+        } while (opcionUsuario != 0);
     }
 }
-
-
-
