@@ -8,6 +8,9 @@ using System.Diagnostics;
 public static class Program
 {
     static List<string> libros = new List<string> {"cien años de soledad", "el hobbit", "harry potter"};
+    static List<string> autor = new List<string> {"Gabriel Garcia Marquez", "J. R. R. Tolkien", "J. K. Rowling"}; 
+    static List<string> categoria = new List<string> {"fantasia", "fantasia", "fantasia"};
+    static List<string> año = new List<string> {"1967", "1937", "1997"};
     static List<bool> prestados = new List<bool> { true, false, true };
     static List<string> usuarios = new List<string> { "Jose", "Joseluis", "Karim" };
     static List<string> contactos = new List<string> { "305-457820", "314-34566", "315-467752" };
@@ -167,6 +170,9 @@ public static class Program
                         Console.WriteLine("\n------------------------------------");
                         Console.WriteLine($"ID/ISBN: {idBuscado}");
                         Console.WriteLine($"Título:  {libros[indice].ToUpper()}");
+                        Console.WriteLine($"Autor:  {autor[indice].ToUpper()}");
+                        Console.WriteLine($"categoria:  {categoria[indice].ToUpper()}");
+                        Console.WriteLine($"año:  {año[indice].ToUpper()}");
                         Console.WriteLine($"Estado:  {estado}");
                         Console.WriteLine("------------------------------------");
                         }
@@ -514,5 +520,22 @@ public static class Program
                     break;
             }
     } while (opcionPrestamos != 0);
+}
+
+    public static void menuReportes()
+    {
+        int opcionBusqueda = -1; 
+
+        do
+        {
+            Console.WriteLine("================ BUSQUEDA Y REPORTES ================");
+            Console.WriteLine("1. Buscar libro");
+            Console.WriteLine("2. Buscar usuario");
+            Console.WriteLine("3. Reportes");
+            Console.WriteLine("0. Volver al menú principal");
+            Console.Write("Selecciona una opción: ");
+
+
+    } while (opcionBusqueda != 0);
 }
 }
