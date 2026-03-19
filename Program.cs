@@ -253,10 +253,6 @@ public static class Program
             }
         } while (opcionLibros !=0);
     }
-    public static void menuUsuarios()
-    {
-        
-    }
 }
 
 
