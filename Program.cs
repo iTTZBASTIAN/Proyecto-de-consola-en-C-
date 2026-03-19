@@ -8,6 +8,8 @@ public static class Program
 {
     static List<string> libros = new List<string> {"cien años de soledad", "el hobbit", "harry potter"};
     static List<bool> prestados = new List<bool> { false, false, true };
+
+    //arrays menu usuarios
     
     public static void Main()
     {
