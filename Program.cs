@@ -60,6 +60,7 @@ public static class Program
                         break;
                     case 4: 
                         Console.Clear();
+                        menuBusquedaYReportes();
                         Console.WriteLine("ingresando a Busquedas y reportes...");
                         Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                         Console.ReadKey();
@@ -514,5 +515,55 @@ public static class Program
                     break;
             }
     } while (opcionPrestamos != 0);
+}
+    public static void menuBusquedaYReportes()
+    {
+        int opcionBYR;
+
+        do
+        {
+            Console.WriteLine("================ BUSQUEDA Y REPORTES ================");
+            Console.WriteLine("1. Buscar libro");
+            Console.WriteLine("2. Buscar usuario");
+            Console.WriteLine("3. Reportes");
+            Console.WriteLine("0. Volver al menú principal");
+            Console.Write("Selecciona una opción: ");
+
+            opcionBYR = Convert.ToInt32(Console.ReadLine());
+
+            switch (opcionBYR)
+            {
+                case 1:
+                    Console.Clear();
+                    Console.WriteLine("\n--- BUSCAR LIBRO ---");
+                    Console.WriteLine("1. buscar por titulo");
+                    Console.WriteLine("2. buscar por autor");
+                    Console.WriteLine("3. buscar por ID");
+                    Console.WriteLine("4. Buscar por categoria");
+                    Console.WriteLine("selecciona una opcion");
+                    string subOpcion = Console.ReadLine();
+                    
+                    for (int i = 0; i < libros.Count; i++)
+                    {
+                        if (subOpcion == "1")
+                        {
+                            string estado = prestados[i] ? "[P]" : "[D]";
+                            Console.WriteLine($"{i + 1}. {libros[i]} {estado}");
+                        }
+                        else if (subOpcion == "2" && prestados[i] == false)
+                        {
+                            Console.WriteLine($"{i + 1}. {libros[i]} [Disponible]");
+                        }
+                        else if (subOpcion == "3" && prestados[i] == true)
+                        {
+                            Console.WriteLine($"{i + 1}. {libros[i]} [Prestado]");
+                        }
+                    }
+                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                    Console.ReadKey();
+                    Console.Clear();
+                    break;
+            }
+    } while (opcionBYR != 0);
 }
 }
