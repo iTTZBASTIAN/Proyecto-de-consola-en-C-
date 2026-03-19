@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 public static class Program
 {
+    //arrays menu usuarios
     static List<string> usuarios = new List<string> { "Jose", "Joseluis", "Karim" };
     static List<string> contactos = new List<string> { "305-457820", "314-34566", "315-467752" };
     static List<bool> activos = new List<bool> { true, true, true }; 
 
-    public static void Main()
+    public static void menuUsuarios()
     {
         int opcionUsuario = -1; 
 
