@@ -251,7 +251,10 @@ public static class Program
             }
         } while (opcionLibros !=0);
     }
-    //final metodo libros
+    public static void menuUsuarios()
+    {
+        
+    }
 }
 
 
