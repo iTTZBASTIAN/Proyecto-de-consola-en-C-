@@ -49,7 +49,6 @@ public static class Program
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine("ingresando a Usuarios...");
                         menuUsuarios();
                         Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                         Console.ReadKey();
@@ -58,7 +57,6 @@ public static class Program
                     case 3:
                         Console.Clear();
                         MenuPrestamos();
-                        Console.WriteLine("ingresando a Prestamos...");
                         Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                         Console.ReadKey();
                         Console.Clear();
@@ -66,14 +64,13 @@ public static class Program
                     case 4: 
                         Console.Clear();
                         menuBusquedaYReportes();
-                        Console.WriteLine("ingresando a Busquedas y reportes...");
                         Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                         Console.ReadKey();
                         Console.Clear();
                         break;
                     case 5: 
                         Console.Clear();
-                        Console.WriteLine("ingresando a Guardar / cargar datos...");
+                        menuGuardarCargardatos();
                         Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                         Console.ReadKey();
                         Console.Clear();
@@ -717,5 +714,81 @@ public static class Program
                 case 0: break;
             }
         } while (opcionBYR != 0);
+    }
+    public static void menuGuardarCargardatos()
+    {
+        int opcionCGD;
+
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("================ CARGAR / GUARDAR DATOS ================");
+            Console.WriteLine("1. Guardar datos");
+            Console.WriteLine("2. Cargar datos");
+            Console.WriteLine("3. Reiniciar datos");
+            Console.WriteLine("0. Volver al menú principal");
+            Console.Write("Selecciona una opción: ");
+
+            opcionCGD = Convert.ToInt32(Console.ReadLine());
+
+            switch (opcionCGD)
+            {
+                case 1:
+                    Console.WriteLine("¿guardar datos? (S/N)");
+                    string opcionGuardado = Console.ReadLine();
+                    if (opcionGuardado == "S")
+                    {
+                        Console.WriteLine("Guardando datos...");
+                        Console.WriteLine("¡hecho!");
+                    }
+                    else if (opcionGuardado == "N")
+                    {
+                        Console.WriteLine("cancelando...");
+                    }
+                    else
+                    {
+                        Console.WriteLine("ingresa una respuesta valida");
+                    }
+                        Console.WriteLine("\nPresiona cualquier tecla para continuar...");
+                        Console.ReadKey();
+
+                    break;
+                case 2:
+                    Console.WriteLine("--------------- CARGAR DATOS ---------------");
+                    Console.WriteLine("\n------------------------------------------");
+                    Console.WriteLine("Presiona cualquier tecla para continuar...");
+                    Console.ReadKey();
+                    break;
+                case 3:
+                    Console.WriteLine("¿reiniciar datos? (S/N)");
+                    string RespuestaReiniciar = Console.ReadLine();
+                    if (RespuestaReiniciar == "S")
+                    {
+                        Console.WriteLine("¿Estás seguro? (S/N)");
+                        string RespuestaConfirmacion = Console.ReadLine();
+
+                        if (RespuestaConfirmacion == "S")
+                        {
+                            Console.WriteLine("Reiniciando datos...");
+                            Console.WriteLine("¡Hecho!");
+                        }
+                        else if (RespuestaConfirmacion == "N")
+                        {
+                            Console.WriteLine("Abortando...");
+                        }
+                    }
+                    else if (RespuestaReiniciar == "N")
+                    {
+                        Console.WriteLine("cancelando...");
+                    }
+                    else
+                    {
+                        Console.WriteLine("ingresa una respuesta valida");
+                    }
+                        Console.WriteLine("\nPresiona cualquier tecla para continuar...");
+                        Console.ReadKey();
+                    break;
+            }
+        } while (opcionCGD != 0);
     }
 }
