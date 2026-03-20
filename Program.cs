@@ -793,7 +793,7 @@ public static class Program
     }
     public static void Exit()
     {
-        Console.WriteLine("¿Seguro que quieres salir? (S/N)");
+        Console.WriteLine("¿Guardar antes de salir? (S/N)");
         string RespuestaSalir = Console.ReadLine();
 
         if (RespuestaSalir == "S")
