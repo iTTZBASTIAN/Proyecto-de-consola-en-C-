@@ -77,7 +77,7 @@ public static class Program
                         break;
                     case 0:
                         Console.Clear();
-                        Console.WriteLine("Volver al menú principal");
+                        Exit();
                         break;
                     default:
                         Console.WriteLine("Opción no válida. Inténtalo de nuevo.");
@@ -790,5 +790,26 @@ public static class Program
                     break;
             }
         } while (opcionCGD != 0);
+    }
+    public static void Exit()
+    {
+        Console.WriteLine("¿Seguro que quieres salir? (S/N)");
+        string RespuestaSalir = Console.ReadLine();
+
+        if (RespuestaSalir == "S")
+        {
+            Console.Clear();
+        }
+        else if (RespuestaSalir == "N")
+        {
+            Console.WriteLine("Cancelando...");
+            Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+            Console.ReadKey();
+            Main();
+        }
+        else
+        {
+            Console.WriteLine("Error: Por favor, ingresa un número válido.");
+        }
     }
 }
