@@ -10,13 +10,15 @@ public static class Program
     static List<string> libros = new List<string> {"cien años de soledad", "el hobbit", "harry potter"};
     static List<string> autor = new List<string> {"Gabriel Garcia Marquez", "J. R. R. Tolkien", "J. K. Rowling"}; 
     static List<string> categoria = new List<string> {"fantasia", "fantasia", "fantasia"};
-    static List<string> año = new List<string> {"1967", "1937", "1997"};
+    static List<string> añoPublicacion = new List<string> {"1967", "1937", "1997"};
     static List<bool> prestados = new List<bool> { true, false, true };
     static List<string> usuarios = new List<string> { "Jose", "Joseluis", "Karim" };
     static List<string> contactos = new List<string> { "305-457820", "314-34566", "315-467752" };
     static List<bool> activos = new List<bool> { true, true, true };
-    static List<string> listaPrestamos = new List<string> { "cien años de soledad", "harry potter"};
+    static List<string> listaPrestamos = new List<string> { "cien años de soledad", "harry potter", ""};
     static List<string> EstadoPrestamos = new List<string> {"activo", "devuelto", "activo"};
+    static List<string> PrestamosPorUsuario = new List<string> {"2", "0", "3"};
+    static List<string> PrestamosPorLibro = new List<string> {"20", "15", "40"};
 
     public static void Main()
     {
@@ -171,6 +173,9 @@ public static class Program
                         Console.WriteLine("\n------------------------------------");
                         Console.WriteLine($"ID/ISBN: {idBuscado}");
                         Console.WriteLine($"Título:  {libros[indice].ToUpper()}");
+                        Console.WriteLine($"Autor:  {autor[indice].ToUpper()}");
+                        Console.WriteLine($"categoria:  {categoria[indice].ToUpper()}");
+                        Console.WriteLine($"año de publicacoin:  {añoPublicacion[indice].ToUpper()}");
                         Console.WriteLine($"Estado:  {estado}");
                         Console.WriteLine("------------------------------------");
                         }
@@ -517,56 +522,200 @@ public static class Program
                     Console.WriteLine("Saliendo...");
                     break;
             }
-    } while (opcionPrestamos != 0);
-}
+        } while (opcionPrestamos != 0);
+    }
     public static void menuBusquedaYReportes()
     {
         int opcionBYR;
-
         do
-        {
-            Console.WriteLine("================ BUSQUEDA Y REPORTES ================");
+        {  
+            Console.Clear();
+            Console.WriteLine("\n================ BUSQUEDA Y REPORTES ================");
             Console.WriteLine("1. Buscar libro");
             Console.WriteLine("2. Buscar usuario");
             Console.WriteLine("3. Reportes");
             Console.WriteLine("0. Volver al menú principal");
             Console.Write("Selecciona una opción: ");
 
-            opcionBYR = Convert.ToInt32(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out opcionBYR)) continue;
 
             switch (opcionBYR)
             {
                 case 1:
                     Console.Clear();
                     Console.WriteLine("\n--- BUSCAR LIBRO ---");
-                    Console.WriteLine("1. buscar por titulo");
-                    Console.WriteLine("2. buscar por autor");
-                    Console.WriteLine("3. buscar por ID");
-                    Console.WriteLine("4. Buscar por categoria");
-                    Console.WriteLine("selecciona una opcion");
+                    Console.WriteLine("1. Buscar por título");
+                    Console.WriteLine("2. Buscar por autor");
+                    Console.WriteLine("3. Buscar por ID");
+                    Console.Write("Selecciona una opcion: ");
                     string subOpcion = Console.ReadLine();
-                    
-                    for (int i = 0; i < libros.Count; i++)
+
+                    if (subOpcion == "1")
                     {
-                        if (subOpcion == "1")
-                        {
-                            string estado = prestados[i] ? "[P]" : "[D]";
-                            Console.WriteLine($"{i + 1}. {libros[i]} {estado}");
+                        Console.Clear();
+                        Console.Write("Ingrese el titulo del libro: ");
+                        string busquedaTitulo = Console.ReadLine().ToLower();
+                        bool encontrado = false;
+                        for (int i = 0; i < libros.Count; i++) {
+                            if (libros[i].ToLower().Contains(busquedaTitulo)) {
+                                Console.WriteLine($"Libro: {libros[i]}");
+                                Console.WriteLine($"Autor: {autor[i]}");
+                                Console.WriteLine($"Categoria: {categoria[i]}");
+                                Console.WriteLine($"Año de publicacion {añoPublicacion[i]}");
+                                encontrado = true;
+                            }
                         }
-                        else if (subOpcion == "2" && prestados[i] == false)
-                        {
-                            Console.WriteLine($"{i + 1}. {libros[i]} [Disponible]");
+                        if (!encontrado) Console.WriteLine("No se encontró el autor.");
+                    }
+                    else if (subOpcion == "2")
+                    {
+                        Console.Clear();
+                        Console.Write("Ingrese el autor: ");
+                        string busquedaAutor = Console.ReadLine().ToLower();
+                        bool encontrado = false;
+                        for (int i = 0; i < autor.Count; i++) {
+                            if (autor[i].ToLower().Contains(busquedaAutor)) {
+                                Console.WriteLine($"Autor: {autor[i]} | Libro: {libros[i]}");
+                                encontrado = true;
+                            }
                         }
-                        else if (subOpcion == "3" && prestados[i] == true)
-                        {
-                            Console.WriteLine($"{i + 1}. {libros[i]} [Prestado]");
+                        if (!encontrado) Console.WriteLine("No se encontró el autor.");
+                    }
+                    else if (subOpcion == "3")
+                    {
+                        Console.Clear();
+                        Console.Write($"Ingrese el ID (1 al {libros.Count}): ");
+                        if (int.TryParse(Console.ReadLine(), out int idBuscado)) {
+                            int indice = idBuscado - 1;
+                            if (indice >= 0 && indice < libros.Count) {
+                                Console.WriteLine("\nLibro Encontrado:");
+                                Console.WriteLine($"-----------------------");
+                                Console.WriteLine($"ID:      {idBuscado}"); 
+                                Console.WriteLine($"Título:  {libros[indice]}");
+                                Console.WriteLine($"Autor:   {autor[indice]}");
+                                Console.WriteLine($"-----------------------");
+                                Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                                Console.ReadKey();
+                                Console.Clear();
+                            } else {
+                                Console.WriteLine("ID fuera de rango.");
+                            }
                         }
                     }
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                    Console.WriteLine("\nPresiona una tecla para continuar...");
                     Console.ReadKey();
-                    Console.Clear();
                     break;
+                case 2:
+                    Console.Clear();
+                    Console.WriteLine("\n--- BUSCAR USUARIOS ---");
+                    Console.WriteLine("1. Buscar por nombre");
+                    Console.WriteLine("2. Buscar por ID");
+                    Console.Write("Selecciona una opcion: ");
+                    string subOpcionUsuario = Console.ReadLine();
+
+                    if (subOpcionUsuario == "1")
+                    {
+                        Console.Clear();
+                        Console.Write("Ingrese el nombre de usuario: ");
+                        string busquedaUsuario = Console.ReadLine().ToLower();
+                        bool encontrado = false;
+                        for (int i = 0; i < usuarios.Count; i++) {
+                            if (usuarios[i].ToLower().Contains(busquedaUsuario)) {
+                                Console.WriteLine($"Usuario: {usuarios[i]} | Contacto: {contactos[i]}");
+                                encontrado = true;
+                            }
+                        }
+                        if (!encontrado) Console.WriteLine("No se encontró el usuario.");
+                        Console.WriteLine("\nPresiona cualquier tecla para continuar...");
+                        Console.ReadKey();
+                    }
+                    else if (subOpcionUsuario == "2")
+                    {
+                        Console.Clear();
+                        Console.Write($"Ingrese el ID (1 al {usuarios.Count}): ");
+                        if (int.TryParse(Console.ReadLine(), out int idBuscado)) {
+                            int indice = idBuscado - 1;
+                            if (indice >= 0 && indice < usuarios.Count) {
+                                Console.WriteLine("\nUsuario encontrado:");
+                                Console.WriteLine($"-----------------------");
+                                Console.WriteLine($"ID:      {idBuscado}"); 
+                                Console.WriteLine($"Usuario:  {usuarios[indice]}");
+                                Console.WriteLine($"Contacto:   {contactos[indice]}");
+                                Console.WriteLine($"-----------------------");
+                                Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
+                                Console.ReadKey();
+                                Console.Clear();
+                            } else {
+                                Console.WriteLine("ID fuera de rango.");
+                            }
+                        }
+                    }
+                    Console.WriteLine("\nPresiona una tecla para continuar...");
+                    Console.ReadKey();
+                    break; 
+                case 3:
+                    Console.Clear();
+                    Console.WriteLine("\n--- REPORTES ---");
+                    Console.WriteLine("1. Préstamos por usuario");
+                    Console.WriteLine("2. Préstamos por libro");
+                    Console.WriteLine("3. Resumen general");
+                    Console.Write("Selecciona una opcion: ");
+                    string subOpcionReporte = Console.ReadLine();
+
+                    if (subOpcionReporte == "1")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\n--- PRESTAMOS POR USUARIO ---");
+                        Console.Write("Ingrese el nombre del usuario: ");
+                        string busquedaUsuario = Console.ReadLine().ToLower();
+                        bool encontrado = false;
+                        for (int i = 0; i < usuarios.Count; i++) {
+                            if (usuarios[i].ToLower().Contains(busquedaUsuario)) {
+                                Console.WriteLine($"Usuario: {usuarios[i]} | prestamos: {PrestamosPorUsuario[i]}");
+                                encontrado = true;
+                            }
+                        }
+                        if (!encontrado) Console.WriteLine("No se encontró el usuario.");
+                        Console.WriteLine("\nPresiona cualquier tecla para continuar...");
+                        Console.ReadKey();
+                    }
+                    if (subOpcionReporte == "2")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\n--- PRESTAMOS POR LIBRO ---");
+                        Console.Write("Ingrese el titulo del libro: ");
+                        string busquedaLibro = Console.ReadLine().ToLower();
+                        bool encontrado = false;
+                        for (int i = 0; i < libros.Count; i++) {
+                            if (libros[i].ToLower().Contains(busquedaLibro)) {
+                                Console.WriteLine($"Libro: {libros[i]} | prestamos: {PrestamosPorLibro[i]}");
+                                encontrado = true;
+                            }
+                        }
+                        if (!encontrado) Console.WriteLine("No se encontró el usuario.");
+                        Console.WriteLine("\nPresiona cualquier tecla para continuar...");
+                        Console.ReadKey();
+                    }
+                    if (subOpcionReporte == "3")
+                    {
+                        Console.Clear();
+                        Console.WriteLine("==========================================");
+                        Console.WriteLine("           RESUMEN GENERAL DE LIBROS      ");
+                        Console.WriteLine("==========================================\n");
+
+                        for (int i = 0; i < libros.Count; i++)
+                        {
+                            string estado = prestados[i] ? "Prestado" : "Disponible";
+                            Console.WriteLine($"{i + 1}. {libros[i].PadRight(25)} | Estado: {estado}");
+                        }
+
+                        Console.WriteLine("\n------------------------------------------");
+                        Console.WriteLine("Presiona cualquier tecla para continuar...");
+                        Console.ReadKey();
+                    }
+                    break;
+                case 0: break;
             }
-    } while (opcionBYR != 0);
-}
+        } while (opcionBYR != 0);
+    }
 }
