@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\navar\\.templateengine\\ProyectoSintaxisCs\\ProyectoSintaxisCs.csproj",
+      "projectUniqueName": "C:\\Users\\navar\\.templateengine\\system-books\\ProyectoSintaxisCs.csproj",
       "projectName": "ProyectoSintaxisCs",
-      "projectPath": "C:\\Users\\navar\\.templateengine\\ProyectoSintaxisCs\\ProyectoSintaxisCs.csproj",
+      "projectPath": "C:\\Users\\navar\\.templateengine\\system-books\\ProyectoSintaxisCs.csproj",
       "packagesPath": "C:\\Users\\navar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\navar\\.templateengine\\ProyectoSintaxisCs\\obj\\",
+      "outputPath": "C:\\Users\\navar\\.templateengine\\system-books\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
