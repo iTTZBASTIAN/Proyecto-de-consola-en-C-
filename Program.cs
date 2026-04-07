@@ -1,16 +1,18 @@
 
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using Books.Models;
 
 public static class Program
 {
-    static List<string> libros = new List<string> {"cien años de soledad", "el hobbit", "harry potter"};
-    static List<string> autor = new List<string> {"Gabriel Garcia Marquez", "J. R. R. Tolkien", "J. K. Rowling"}; 
-    static List<string> categoria = new List<string> {"fantasia", "fantasia", "fantasia"};
-    static List<string> añoPublicacion = new List<string> {"1967", "1937", "1997"};
+    static List<Libro> inventario = new List<Libro>()
+    {
+        new Libro("cien años de soledad", "Gabriel Garcia Marquez", "fantasia", "1967", "20"),
+        new Libro("el hobbit", "J. R. R. Tolkien", "fantasia", "1937", "15"),
+        new Libro("harry potter", "J. K. Rowling", "fantasia", "1997", "40")
+    };
     static List<bool> prestados = new List<bool> { true, false, true };
     static List<string> usuarios = new List<string> { "Jose", "Joseluis", "Karim" };
     static List<string> contactos = new List<string> { "305-457820", "314-34566", "315-467752" };
@@ -22,7 +24,6 @@ public static class Program
 
     public static void Main()
     {
-
         int opcion;
 
             do
@@ -86,188 +87,92 @@ public static class Program
             } while (opcion != 0);
         }
             
-    public static void MostrarMenuLibros()
-    {   
-        int opcionLibros;
+public static void MostrarMenuLibros()
+{
+    int opcionLibros;
 
-        do
+    do
+    {
+        Console.WriteLine("================ LIBROS ================");
+        Console.WriteLine("1. Registrar libro");
+        Console.WriteLine("2. Listar libros");
+        Console.WriteLine("3. Ver detalle (por ID/ISBN)");
+        Console.WriteLine("4. Actualizar libro");
+        Console.WriteLine("5. Eliminar libro");
+        Console.WriteLine("0. Volver al menú principal");
+        Console.Write("Selecciona una opción: ");
+
+        if (!int.TryParse(Console.ReadLine(), out opcionLibros)) continue;
+
+        switch (opcionLibros)
         {
-            Console.WriteLine("================ LIBROS ================");
-            Console.WriteLine("1. Registrar libro");
-            Console.WriteLine("2. Listar libros");
-            Console.WriteLine("3. Ver detalle (por ID/ISBN)");
-            Console.WriteLine("4. Actualizar libro");
-            Console.WriteLine("5. Eliminar libro");
-            Console.WriteLine("0. Volver al menú principal");
-            Console.Write("Selecciona una opción: ");
+            case 1: // REGISTRAR
+                Console.Write("Título: "); string t = Console.ReadLine() ?? "";
+                Console.Write("Autor: "); string a = Console.ReadLine() ?? "";
+                Console.Write("Categoría: "); string c = Console.ReadLine() ?? "";
+                Console.Write("Año: "); string anio = Console.ReadLine() ?? "";
 
-            opcionLibros = Convert.ToInt32(Console.ReadLine());
-
-            switch (opcionLibros)
-            {
-                case 1:
-                    Console.Write("Escribe el nombre del nuevo libro: ");
-                    string nuevoLibro = Console.ReadLine();
-                    
-                    if (!string.IsNullOrWhiteSpace(nuevoLibro))
-                    {
-                        libros.Add(nuevoLibro);
-                        Console.WriteLine("¡Libro registrado con éxito!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("El nombre no puede estar vacío.");
-                    }
-                    break;
-                case 2:
-                    Console.Clear();
-                    Console.WriteLine("\n--- Lista de Libros ---");
-                    Console.WriteLine("1. listar todos");
-                    Console.WriteLine("2. listar disponibles");
-                    Console.WriteLine("3. Listar prestados");
-                    Console.WriteLine("selecciona una opcion");
-                    string subOpcion = Console.ReadLine();
-                    
-                    for (int i = 0; i < libros.Count; i++)
-                    {
-                        if (subOpcion == "1")
-                        {
-                            string estado = prestados[i] ? "[P]" : "[D]";
-                            Console.WriteLine($"{i + 1}. {libros[i]} {estado}");
-                        }
-                        else if (subOpcion == "2" && prestados[i] == false)
-                        {
-                            Console.WriteLine($"{i + 1}. {libros[i]} [Disponible]");
-                        }
-                        else if (subOpcion == "3" && prestados[i] == true)
-                        {
-                            Console.WriteLine($"{i + 1}. {libros[i]} [Prestado]");
-                        }
-                    }
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 3:
-                    Console.Clear();
-                    Console.WriteLine("========== DETALLE DEL LIBRO ==========");
-        
-                    if (libros.Count == 0)
-                    {
-                        Console.WriteLine("No hay libros registrados en el sistema.");
-                    }
-                    else
-                    {
-                        Console.Write($"Ingresa el ID del libro (1 al {libros.Count}): ");
-                    if (int.TryParse(Console.ReadLine(), out int idBuscado))
-                    {
-                        int indice = idBuscado - 1;
-
-                        if (indice >= 0 && indice < libros.Count)
-                        {
-                        string estado = prestados[indice] ? "Prestado" : "Disponible";
-                        
-                        Console.WriteLine("\n------------------------------------");
-                        Console.WriteLine($"ID/ISBN: {idBuscado}");
-                        Console.WriteLine($"Título:  {libros[indice].ToUpper()}");
-                        Console.WriteLine($"Autor:  {autor[indice].ToUpper()}");
-                        Console.WriteLine($"categoria:  {categoria[indice].ToUpper()}");
-                        Console.WriteLine($"año de publicacoin:  {añoPublicacion[indice].ToUpper()}");
-                        Console.WriteLine($"Estado:  {estado}");
-                        Console.WriteLine("------------------------------------");
-                        }
-                    else
-                    {
-                        Console.WriteLine("Error: El ID ingresado no existe.");
-                    }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error: Por favor, ingresa un número válido.");
-                    }
-                    }
-
-                    Console.WriteLine("\nPresiona cualquier tecla para volver...");
-                    Console.ReadKey();
-                    Console.Clear();
+                if (!string.IsNullOrWhiteSpace(t)) {
+                    inventario.Add(new Libro(t, a, c, anio, "0"));
+                    Console.WriteLine("¡Libro registrado con éxito!");
+                }
                 break;
 
-            case 4:
+            case 2: // LISTAR
                 Console.Clear();
-                Console.WriteLine("========== ACTUALIZAR LIBRO ==========");
-
-                for (int i = 0; i < libros.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {libros[i]}");
-                }
-
-                Console.Write("\nIngresa el ID del libro que deseas editar: ");
-                if (int.TryParse(Console.ReadLine(), out int idEditar))
-                {
-                    int indice = idEditar - 1;
-
-                    if (indice >= 0 && indice < libros.Count)
-                    {
-                        Console.Clear();
-                        Console.WriteLine($"Editando: {libros[indice].ToUpper()}");
-                        Console.WriteLine("1. Cambiar título");
-                        Console.WriteLine("2. Cambiar estado (Disponible/Prestado)");
-                        Console.WriteLine("0. Cancelar");
-                        Console.Write("Selecciona qué deseas hacer: ");
-                        
-                        string subOpcionEdit = Console.ReadLine();
-
-                        switch (subOpcionEdit)
-                        {
-                            case "1":
-                                Console.Write("Ingresa el nuevo título: ");
-                                string nuevoTitulo = Console.ReadLine();
-                                if (!string.IsNullOrWhiteSpace(nuevoTitulo))
-                                {
-                                    libros[indice] = nuevoTitulo;
-                                    Console.WriteLine("¡Título actualizado!");
-                                }
-                                break;
-
-                            case "2":
-
-                                prestados[indice] = !prestados[indice]; 
-                                string nuevoEstado = prestados[indice] ? "Prestado" : "Disponible";
-                                Console.WriteLine($"¡Estado cambiado a {nuevoEstado}!");
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error: El ID no existe.");
-                    }
-                }
+                Console.WriteLine("1. Listar todos\n2. Disponibles\n3. Prestados");
+                string sub = Console.ReadLine() ?? "";
                 
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-                    Console.ReadKey();
-                    Console.Clear();
-    
-                    break;
-                case 5:
-                    Console.Clear();
-                    Console.WriteLine("======== ELIMINAR LIBRO ========");
-                    Console.WriteLine("Validar no permitir si está prestado...");
+                for (int i = 0; i < inventario.Count; i++) {
+                    var libro = inventario[i]; // Accedemos al objeto completo
+                    
+                    if (sub == "1") 
+                        Console.WriteLine($"{i + 1}. {libro.ResumenCorto()} [{(libro.Disponible ? "D" : "P")}]");
+                    else if (sub == "2" && libro.Disponible)
+                        Console.WriteLine($"{i + 1}. {libro.ResumenCorto()}");
+                    else if (sub == "3" && !libro.Disponible)
+                        Console.WriteLine($"{i + 1}. {libro.ResumenCorto()}");
+                }
+                break;
 
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 0:
+            case 3: // VER DETALLE
+                Console.Write($"ID (1-{inventario.Count}): ");
+                if (int.TryParse(Console.ReadLine(), out int id) && id > 0 && id <= inventario.Count) {
+                    // ¡Usamos el método que creamos en la clase!
+                    Console.WriteLine(inventario[id - 1].DetalleCompleto());
+                }
+                break;
 
-                    Console.Clear();
-                    Console.WriteLine("Saliendo del programa...");
-                    break;
-                default:
-                    Console.WriteLine("Opción no válida. Inténtalo de nuevo.");
-                    break;
-            }
-        } while (opcionLibros !=0);
-    }
+            case 4: // ACTUALIZAR
+                Console.Write("ID a editar: ");
+                if (int.TryParse(Console.ReadLine(), out int idEd) && idEd > 0 && idEd <= inventario.Count) {
+                    var libro = inventario[idEd - 1];
+                    Console.WriteLine("1. Cambiar Título\n2. Cambiar Estado");
+                    string opt = Console.ReadLine() ?? "";
+                    if (opt == "1") {
+                        Console.Write("Nuevo título: ");
+                        libro.Titulo = Console.ReadLine() ?? "";
+                    } else if (opt == "2") {
+                        libro.Disponible = !libro.Disponible;
+                    }
+                }
+                break;
+
+            case 5: // ELIMINAR
+                Console.Write("ID a eliminar: ");
+                if (int.TryParse(Console.ReadLine(), out int idEl) && idEl > 0 && idEl <= inventario.Count) {
+                    if (inventario[idEl - 1].Disponible) {
+                        inventario.RemoveAt(idEl - 1);
+                        Console.WriteLine("Libro eliminado.");
+                    } else {
+                        Console.WriteLine("No se puede eliminar un libro prestado.");
+                    }
+                }
+                break;
+        }
+        if (opcionLibros != 0) { Console.WriteLine("\nPresiona una tecla..."); Console.ReadKey(); Console.Clear(); }
+    } while (opcionLibros != 0);
+}
     public static void menuUsuarios()
     {
         int opcionUsuario = -1; 
@@ -293,7 +198,7 @@ public static class Program
             {
                 case 1: 
                     Console.Write("Escribe el nombre del nuevo usuario: ");
-                    string nuevoUsuario = Console.ReadLine();
+                    string nuevoUsuario = Console.ReadLine() ??"" ;
                     if (!string.IsNullOrWhiteSpace(nuevoUsuario))
                     {
                         usuarios.Add(nuevoUsuario);
@@ -355,16 +260,16 @@ public static class Program
                         if (indice >= 0 && indice < usuarios.Count)
                         {
                             Console.WriteLine("1. Nombre | 2. Contacto | 3. Estado | 0. Salir");
-                            string subOpcion = Console.ReadLine();
+                            string subOpcion = Console.ReadLine() ?? "";
                             switch (subOpcion)
                             {
                                 case "1":
                                     Console.Write("Nuevo nombre: ");
-                                    usuarios[indice] = Console.ReadLine();
+                                    usuarios[indice] = Console.ReadLine() ?? "";
                                     break;
                                 case "2":
                                     Console.Write("Nuevo contacto: ");
-                                    contactos[indice] = Console.ReadLine();
+                                    contactos[indice] = Console.ReadLine() ?? "";
                                     break;
                                 case "3":
                                     activos[indice] = !activos[indice];
@@ -487,7 +392,7 @@ public static class Program
                             Console.WriteLine("0. Cancelar");
                             Console.Write("Selecciona qué deseas hacer: ");
                             
-                            string subOpcionEdit = Console.ReadLine();
+                            string subOpcionEdit = Console.ReadLine() ?? "";
 
                             switch (subOpcionEdit)
                             {
@@ -545,34 +450,38 @@ public static class Program
                     Console.WriteLine("2. Buscar por autor");
                     Console.WriteLine("3. Buscar por ID");
                     Console.Write("Selecciona una opcion: ");
-                    string subOpcion = Console.ReadLine();
+                    string subOpcion = Console.ReadLine() ?? "";
 
                     if (subOpcion == "1")
                     {
                         Console.Clear();
                         Console.Write("Ingrese el titulo del libro: ");
-                        string busquedaTitulo = Console.ReadLine().ToLower();
+                        string busquedaTitulo = Console.ReadLine() ?? "".ToLower();
                         bool encontrado = false;
-                        for (int i = 0; i < libros.Count; i++) {
-                            if (libros[i].ToLower().Contains(busquedaTitulo)) {
-                                Console.WriteLine($"Libro: {libros[i]}");
-                                Console.WriteLine($"Autor: {autor[i]}");
-                                Console.WriteLine($"Categoria: {categoria[i]}");
-                                Console.WriteLine($"Año de publicacion {añoPublicacion[i]}");
-                                encontrado = true;
+
+                            for (int i = 0; i < inventario.Count; i++) 
+                            {
+                                // CAMBIO: Accedemos a inventario[i].Titulo
+                                if (inventario[i].Titulo.ToLower().Contains(busquedaTitulo)) 
+                                {
+                                    // CAMBIO: Usamos las propiedades del objeto o el método DetalleCompleto()
+                                    Console.WriteLine(inventario[i].DetalleCompleto());
+                                    encontrado = true;
+                                }
                             }
-                        }
                         if (!encontrado) Console.WriteLine("No se encontró el autor.");
                     }
                     else if (subOpcion == "2")
                     {
                         Console.Clear();
                         Console.Write("Ingrese el autor: ");
-                        string busquedaAutor = Console.ReadLine().ToLower();
+                        string busquedaAutor = Console.ReadLine() ?? "".ToLower();
                         bool encontrado = false;
-                        for (int i = 0; i < autor.Count; i++) {
-                            if (autor[i].ToLower().Contains(busquedaAutor)) {
-                                Console.WriteLine($"Autor: {autor[i]} | Libro: {libros[i]}");
+                        for (int i = 0; i < inventario.Count; i++) 
+                        {
+                            if (inventario[i].Autor.ToLower().Contains(busquedaAutor)) 
+                            {
+                                Console.WriteLine($"Autor: {inventario[i].Autor} | Libro: {inventario[i].Titulo}");
                                 encontrado = true;
                             }
                         }
@@ -581,20 +490,24 @@ public static class Program
                     else if (subOpcion == "3")
                     {
                         Console.Clear();
-                        Console.Write($"Ingrese el ID (1 al {libros.Count}): ");
-                        if (int.TryParse(Console.ReadLine(), out int idBuscado)) {
+                        Console.Write($"Ingrese el ID (1 al {inventario.Count}): "); 
+
+                        if (int.TryParse(Console.ReadLine(), out int idBuscado)) 
+                        {
                             int indice = idBuscado - 1;
-                            if (indice >= 0 && indice < libros.Count) {
+
+                            if (indice >= 0 && indice < inventario.Count) 
+                            {
                                 Console.WriteLine("\nLibro Encontrado:");
-                                Console.WriteLine($"-----------------------");
-                                Console.WriteLine($"ID:      {idBuscado}"); 
-                                Console.WriteLine($"Título:  {libros[indice]}");
-                                Console.WriteLine($"Autor:   {autor[indice]}");
-                                Console.WriteLine($"-----------------------");
+                                
+                                Console.WriteLine(inventario[indice].DetalleCompleto());
+
                                 Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                                 Console.ReadKey();
                                 Console.Clear();
-                            } else {
+                            } 
+                            else 
+                            {
                                 Console.WriteLine("ID fuera de rango.");
                             }
                         }
@@ -608,13 +521,13 @@ public static class Program
                     Console.WriteLine("1. Buscar por nombre");
                     Console.WriteLine("2. Buscar por ID");
                     Console.Write("Selecciona una opcion: ");
-                    string subOpcionUsuario = Console.ReadLine();
+                    string subOpcionUsuario = Console.ReadLine() ?? "";
 
                     if (subOpcionUsuario == "1")
                     {
                         Console.Clear();
                         Console.Write("Ingrese el nombre de usuario: ");
-                        string busquedaUsuario = Console.ReadLine().ToLower();
+                        string busquedaUsuario = Console.ReadLine() ?? "".ToLower();
                         bool encontrado = false;
                         for (int i = 0; i < usuarios.Count; i++) {
                             if (usuarios[i].ToLower().Contains(busquedaUsuario)) {
@@ -657,14 +570,14 @@ public static class Program
                     Console.WriteLine("2. Préstamos por libro");
                     Console.WriteLine("3. Resumen general");
                     Console.Write("Selecciona una opcion: ");
-                    string subOpcionReporte = Console.ReadLine();
+                    string subOpcionReporte = Console.ReadLine() ?? "";
 
                     if (subOpcionReporte == "1")
                     {
                         Console.Clear();
                         Console.WriteLine("\n--- PRESTAMOS POR USUARIO ---");
                         Console.Write("Ingrese el nombre del usuario: ");
-                        string busquedaUsuario = Console.ReadLine().ToLower();
+                        string busquedaUsuario = Console.ReadLine() ?? "".ToLower();
                         bool encontrado = false;
                         for (int i = 0; i < usuarios.Count; i++) {
                             if (usuarios[i].ToLower().Contains(busquedaUsuario)) {
@@ -681,15 +594,22 @@ public static class Program
                         Console.Clear();
                         Console.WriteLine("\n--- PRESTAMOS POR LIBRO ---");
                         Console.Write("Ingrese el titulo del libro: ");
-                        string busquedaLibro = Console.ReadLine().ToLower();
+                        string busquedaLibro = Console.ReadLine() ?? "".ToLower();
                         bool encontrado = false;
-                        for (int i = 0; i < libros.Count; i++) {
-                            if (libros[i].ToLower().Contains(busquedaLibro)) {
-                                Console.WriteLine($"Libro: {libros[i]} | prestamos: {PrestamosPorLibro[i]}");
+
+                        // Cambiamos 'libros.Count' por 'inventario.Count'
+                        for (int i = 0; i < inventario.Count; i++) 
+                        {
+
+                            if (inventario[i].Titulo.ToLower().Contains(busquedaLibro)) 
+                            {
+                                Console.WriteLine($"Libro: {inventario[i].Titulo} | prestamos: {inventario[i].ConteoPrestamos}");
+                                
                                 encontrado = true;
                             }
                         }
-                        if (!encontrado) Console.WriteLine("No se encontró el usuario.");
+
+                        if (!encontrado) Console.WriteLine("No se encontró el libro.");
                         Console.WriteLine("\nPresiona cualquier tecla para continuar...");
                         Console.ReadKey();
                     }
@@ -700,10 +620,10 @@ public static class Program
                         Console.WriteLine("           RESUMEN GENERAL DE LIBROS      ");
                         Console.WriteLine("==========================================\n");
 
-                        for (int i = 0; i < libros.Count; i++)
+                        for (int i = 0; i < inventario.Count; i++)
                         {
                             string estado = prestados[i] ? "Prestado" : "Disponible";
-                            Console.WriteLine($"{i + 1}. {libros[i].PadRight(25)} | Estado: {estado}");
+                            Console.WriteLine($"{i + 1}. {inventario[i].Titulo.PadRight(25)} | Estado: {estado}");
                         }
 
                         Console.WriteLine("\n------------------------------------------");
@@ -735,7 +655,7 @@ public static class Program
             {
                 case 1:
                     Console.WriteLine("¿guardar datos? (S/N)");
-                    string opcionGuardado = Console.ReadLine();
+                    string opcionGuardado = Console.ReadLine() ?? "";
                     if (opcionGuardado == "S")
                     {
                         Console.WriteLine("Guardando datos...");
@@ -761,11 +681,11 @@ public static class Program
                     break;
                 case 3:
                     Console.WriteLine("¿reiniciar datos? (S/N)");
-                    string RespuestaReiniciar = Console.ReadLine();
+                    string RespuestaReiniciar = Console.ReadLine() ?? "";
                     if (RespuestaReiniciar == "S")
                     {
                         Console.WriteLine("¿Estás seguro? (S/N)");
-                        string RespuestaConfirmacion = Console.ReadLine();
+                        string RespuestaConfirmacion = Console.ReadLine() ?? "";
 
                         if (RespuestaConfirmacion == "S")
                         {
@@ -794,7 +714,7 @@ public static class Program
     public static void Exit()
     {
         Console.WriteLine("¿Guardar antes de salir? (S/N)");
-        string RespuestaSalir = Console.ReadLine();
+        string RespuestaSalir = Console.ReadLine() ?? "";
 
         if (RespuestaSalir == "S")
         {
