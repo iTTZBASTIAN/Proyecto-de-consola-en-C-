@@ -1,0 +1,143 @@
+{
+  "Libros": [
+    {
+      "Titulo": "cien a\u00F1os de soledad",
+      "Autor": "Gabriel Garcia Marquez",
+      "Categoria": "fantasia",
+      "A\u00F1oPublicacion": "1967",
+      "Disponible": true,
+      "ConteoPrestamos": "20"
+    },
+    {
+      "Titulo": "el hobbit",
+      "Autor": "J. R. R. Tolkien",
+      "Categoria": "fantasia",
+      "A\u00F1oPublicacion": "1937",
+      "Disponible": true,
+      "ConteoPrestamos": "15"
+    },
+    {
+      "Titulo": "harry potter",
+      "Autor": "J. K. Rowling",
+      "Categoria": "fantasia",
+      "A\u00F1oPublicacion": "1997",
+      "Disponible": true,
+      "ConteoPrestamos": "40"
+    },
+    {
+      "Titulo": "Romeo y Julieta",
+      "Autor": "William Shakespeare",
+      "Categoria": "Tragedia",
+      "A\u00F1oPublicacion": "1597",
+      "Disponible": true,
+      "ConteoPrestamos": "0"
+    },
+    {
+      "Titulo": "Los juegos del hambre",
+      "Autor": "Suzanne Collins",
+      "Categoria": "ciencia ficcion",
+      "A\u00F1oPublicacion": "2008",
+      "Disponible": false,
+      "ConteoPrestamos": "0"
+    },
+    {
+      "Titulo": "Don quijote de la mancha",
+      "Autor": "Miguel de Cervantes",
+      "Categoria": "aventura",
+      "A\u00F1oPublicacion": "1605",
+      "Disponible": true,
+      "ConteoPrestamos": "0"
+    }
+  ],
+  "Usuarios": [
+    {
+      "Nombre": "Jose",
+      "Contacto": "305-457820",
+      "Activo": true,
+      "PrestamosAcumulados": "2"
+    },
+    {
+      "Nombre": "Joseluis",
+      "Contacto": "314-34566",
+      "Activo": true,
+      "PrestamosAcumulados": "0"
+    },
+    {
+      "Nombre": "Karim",
+      "Contacto": "315-467752",
+      "Activo": true,
+      "PrestamosAcumulados": "3"
+    },
+    {
+      "Nombre": "Sebastian",
+      "Contacto": "123-456-7556",
+      "Activo": true,
+      "PrestamosAcumulados": "0"
+    },
+    {
+      "Nombre": "Gabriela",
+      "Contacto": "123-346-5664",
+      "Activo": true,
+      "PrestamosAcumulados": "0"
+    }
+  ],
+  "Prestamos": [
+    {
+      "LibroPrestado": {
+        "Titulo": "cien a\u00F1os de soledad",
+        "Autor": "Gabriel Garcia Marquez",
+        "Categoria": "fantasia",
+        "A\u00F1oPublicacion": "1967",
+        "Disponible": true,
+        "ConteoPrestamos": "20"
+      },
+      "UsuarioReceptor": {
+        "Nombre": "Jose",
+        "Contacto": "305-457820",
+        "Activo": true,
+        "PrestamosAcumulados": "2"
+      },
+      "FechaSalida": "2026-04-06T22:59:08.3237122-05:00",
+      "FechaDevolucion": null,
+      "Estado": 0
+    },
+    {
+      "LibroPrestado": {
+        "Titulo": "el hobbit",
+        "Autor": "J. R. R. Tolkien",
+        "Categoria": "fantasia",
+        "A\u00F1oPublicacion": "1937",
+        "Disponible": true,
+        "ConteoPrestamos": "15"
+      },
+      "UsuarioReceptor": {
+        "Nombre": "Joseluis",
+        "Contacto": "314-34566",
+        "Activo": true,
+        "PrestamosAcumulados": "0"
+      },
+      "FechaSalida": "2026-04-06T22:59:08.3326356-05:00",
+      "FechaDevolucion": "2026-04-06T22:59:08.3326379-05:00",
+      "Estado": 1
+    },
+    {
+      "LibroPrestado": {
+        "Titulo": "Los juegos del hambre",
+        "Autor": "Suzanne Collins",
+        "Categoria": "ciencia ficcion",
+        "A\u00F1oPublicacion": "2008",
+        "Disponible": false,
+        "ConteoPrestamos": "0"
+      },
+      "UsuarioReceptor": {
+        "Nombre": "Gabriela",
+        "Contacto": "123-346-5664",
+        "Activo": true,
+        "PrestamosAcumulados": "0"
+      },
+      "FechaSalida": "2026-04-06T23:05:14.4431852-05:00",
+      "FechaDevolucion": null,
+      "Estado": 0
+    }
+  ]
+}
