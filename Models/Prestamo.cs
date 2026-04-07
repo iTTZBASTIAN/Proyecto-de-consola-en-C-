@@ -9,7 +9,7 @@ namespace Books.Models
 
         public DateTime FechaSalida { get; set; }
         public DateTime? FechaDevolucion { get; set; } 
-        public bool Activo { get; set; }
+        public EstadoPrestamo Estado { get; set; }
 
         public Prestamo()
         {
@@ -17,7 +17,7 @@ namespace Books.Models
             UsuarioReceptor = new Usuario();
             FechaSalida = DateTime.Now;
             FechaDevolucion = null;
-            Activo = true;
+            Estado = EstadoPrestamo.Activo;
         }
 
         public Prestamo(Libro libro, Usuario usuario)
@@ -26,13 +26,13 @@ namespace Books.Models
             UsuarioReceptor = usuario;
             FechaSalida = DateTime.Now;
             FechaDevolucion = null;
-            Activo = true;
+            Estado = EstadoPrestamo.Activo;
         }
 
 
         public bool EstaVencido()
         {
-            return Activo && (DateTime.Now - FechaSalida).TotalDays > 7;
+            return Estado == EstadoPrestamo.Activo && (DateTime.Now - FechaSalida).TotalDays > 7;
         }
 
         public int DiasTranscurridos()
@@ -52,11 +52,11 @@ namespace Books.Models
                 : "Pendiente";
 
             return $"PRESTAMO: {LibroPrestado.Titulo.ToUpper()}\n" +
-                   $"Usuario: {UsuarioReceptor.Nombre}\n" +
-                   $"Fecha Salida: {FechaSalida.ToShortDateString()}\n" +
-                   $"Fecha Devolución: {fDevolucion}\n" +
-                   $"Días transcurridos: {DiasTranscurridos()}\n" +
-                   $"Estado: {(Activo ? "Activo" : "Finalizado")}";
+                $"Usuario: {UsuarioReceptor.Nombre}\n" +
+                $"Fecha Salida: {FechaSalida.ToShortDateString()}\n" +
+                $"Fecha Devolución: {fDevolucion}\n" +
+                $"Días transcurridos: {DiasTranscurridos()}\n" +
+                $"Estado: {Estado}";
         }
 
         public override string ToString()

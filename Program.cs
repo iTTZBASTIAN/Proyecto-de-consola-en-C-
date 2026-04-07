@@ -21,14 +21,12 @@ public static class Program
     };
     static List<Prestamo> listaPrestamos = new List<Prestamo>()
     {
-        new Prestamo(inventario[0], listaUsuarios[0]),  
-        new Prestamo(inventario[1], listaUsuarios[1]) 
-        { 
-            Activo = false, 
-            FechaDevolucion = DateTime.Now 
+        new Prestamo(inventario[0], listaUsuarios[0]),
+        new Prestamo(inventario[1], listaUsuarios[1])
+        {
+            Estado = EstadoPrestamo.Devuelto, 
+            FechaDevolucion = DateTime.Now
         },
-        
-        new Prestamo(inventario[2], listaUsuarios[2])
     };
 
     public static void Main()
@@ -337,7 +335,7 @@ public static void MostrarMenuLibros()
                     Console.WriteLine("\n--- Lista de Prestamos ---");
                     for (int i = 0; i < listaPrestamos.Count; i++)
                     {
-                        string estado = listaPrestamos[i].Activo ? "Activo" : "Devuelto";
+                        string estado = listaPrestamos[i].Estado.ToString();
                         Console.WriteLine($"{i + 1}. {listaPrestamos[i].LibroPrestado.Titulo} - Usuario: {listaPrestamos[i].UsuarioReceptor.Nombre} | Estado: {estado}");
                     }
                     Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
@@ -362,8 +360,8 @@ public static void MostrarMenuLibros()
                                 Console.WriteLine($"ID: {idBuscado}");
                                 Console.WriteLine($"Libro prestado:  {listaPrestamos[indice].LibroPrestado.Titulo.ToUpper()}");
                                 Console.WriteLine($"Contacto: {listaUsuarios[indice].Contacto}");
-                                string estadoPrestamo = listaPrestamos[indice].Activo ? "Activo" : "Devuelto";
-                                Console.WriteLine($"Estado:          {estadoPrestamo}");
+                                string estadoPrestamo = listaPrestamos[indice].Estado.ToString();
+                                Console.WriteLine($"Estado:          {listaPrestamos[indice].Estado}");
                                 Console.WriteLine("-------------------------------------------");
                             }
                         }
@@ -401,20 +399,20 @@ public static void MostrarMenuLibros()
                             {
                                 case "1":
                                     // Lógica para alternar el estado
-                                    if (listaPrestamos[indice].Activo)
+                                    if (listaPrestamos[indice].Estado == EstadoPrestamo.Activo)
                                     {
-                                        listaPrestamos[indice].Activo = false;
+                                        listaPrestamos[indice].Estado = EstadoPrestamo.Devuelto;
                                         listaPrestamos[indice].FechaDevolucion = DateTime.Now; // Registramos cuándo volvió
                                         listaPrestamos[indice].LibroPrestado.Disponible = true; // El libro vuelve a estar libre
                                     }
                                     else
                                     {
-                                        listaPrestamos[indice].Activo = true;
+                                        listaPrestamos[indice].Estado = EstadoPrestamo.Activo;
                                         listaPrestamos[indice].FechaDevolucion = null; // Volvió a salir, quitamos fecha de devolución
                                         listaPrestamos[indice].LibroPrestado.Disponible = false; // El libro vuelve a estar ocupado
                                     }
 
-                                    string nuevoEstado = listaPrestamos[indice].Activo ? "Activo" : "Devuelto";
+                                    string nuevoEstado = listaPrestamos[indice].Estado == EstadoPrestamo.Activo ? "Activo" : "Devuelto";
                                     Console.WriteLine($"¡Estado cambiado a {nuevoEstado}!");
                                     break;
                             }
