@@ -25,14 +25,6 @@
       "ConteoPrestamos": "40"
     },
     {
-      "Titulo": "Romeo y Julieta",
-      "Autor": "William Shakespeare",
-      "Categoria": "Tragedia",
-      "A\u00F1oPublicacion": "1597",
-      "Disponible": true,
-      "ConteoPrestamos": "0"
-    },
-    {
       "Titulo": "Los juegos del hambre",
       "Autor": "Suzanne Collins",
       "Categoria": "ciencia ficcion",
@@ -41,11 +33,11 @@
       "ConteoPrestamos": "0"
     },
     {
-      "Titulo": "Don quijote de la mancha",
-      "Autor": "Miguel de Cervantes",
-      "Categoria": "aventura",
-      "A\u00F1oPublicacion": "1605",
-      "Disponible": true,
+      "Titulo": "los 7 pecados capitales",
+      "Autor": "William Shakespeare",
+      "Categoria": "trajedia",
+      "A\u00F1oPublicacion": "1897",
+      "Disponible": false,
       "ConteoPrestamos": "0"
     }
   ],
@@ -75,8 +67,14 @@
       "PrestamosAcumulados": "0"
     },
     {
-      "Nombre": "Gabriela",
+      "Nombre": "Joel",
       "Contacto": "123-346-5664",
+      "Activo": true,
+      "PrestamosAcumulados": "0"
+    },
+    {
+      "Nombre": "Gabriela",
+      "Contacto": "341-456-24567",
       "Activo": true,
       "PrestamosAcumulados": "0"
     }
