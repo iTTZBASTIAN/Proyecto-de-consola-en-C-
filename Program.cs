@@ -1,5 +1,7 @@
 
 using System;
+using System.Text.Json;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -7,6 +9,12 @@ using Books.Models;
 
 public static class Program
 {
+    class DataStorage 
+    {
+        public List<Libro>? Libros { get; set; }
+        public List<Usuario>? Usuarios { get; set; }
+        public List<Prestamo>? Prestamos { get; set; }
+    }
     static List<Libro> inventario = new List<Libro>()
     {
         new Libro("cien años de soledad", "Gabriel Garcia Marquez", "fantasia", "1967", "20"),
@@ -33,7 +41,7 @@ public static class Program
     public static void Main()
     {
         int opcion;
-
+        CargarDatos();
             do
             {
                 Console.WriteLine("================ MENU PRINCIPAL ================");
@@ -86,6 +94,7 @@ public static class Program
                         break;
                     case 0:
                         Console.Clear();
+                        GuardarDatos();
                         Exit();
                         break;
                     default:
@@ -816,4 +825,36 @@ static void PausarContinuar()
             Console.WriteLine("Error: Por favor, ingresa un número válido.");
         }
     }
+    static void GuardarDatos()
+{
+    var opciones = new JsonSerializerOptions { WriteIndented = true };
+    
+    // Creamos un objeto que contenga todas nuestras listas
+    var todasLasListas = new {
+        Libros = inventario,
+        Usuarios = listaUsuarios,
+        Prestamos = listaPrestamos
+    };
+
+    string jsonString = JsonSerializer.Serialize(todasLasListas, opciones);
+    File.WriteAllText("biblioteca.json", jsonString);
+}
+
+static void CargarDatos()
+{
+    if (File.Exists("biblioteca.json"))
+    {
+        string jsonString = File.ReadAllText("biblioteca.json");
+        var datosRecuperados = JsonSerializer.Deserialize<DataStorage>(jsonString);
+
+        if (datosRecuperados != null)
+        {
+            inventario = datosRecuperados.Libros;
+            listaUsuarios = datosRecuperados.Usuarios;
+            listaPrestamos = datosRecuperados.Prestamos;
+        }
+    }
+}
+
+// Clase auxiliar para la estructura del JSO
 }
