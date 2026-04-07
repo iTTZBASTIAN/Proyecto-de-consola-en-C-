@@ -1,19 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "C:\\Users\\navar\\.templateengine\\system-books\\ProyectoSintaxisCs.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\navar\\.templateengine\\system-books\\ProyectoSintaxisCs.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\navar\\.templateengine\\system-books\\ProyectoSintaxisCs.csproj",
-        "projectName": "ProyectoSintaxisCs",
-        "projectPath": "C:\\Users\\navar\\.templateengine\\system-books\\ProyectoSintaxisCs.csproj",
-        "packagesPath": "C:\\Users\\navar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\navar\\.templateengine\\system-books\\obj\\",
-=======
     "C:\\Users\\navar\\.templateengine\\Books\\ProyectoSintaxisCs.csproj": {}
   },
   "projects": {
@@ -25,7 +12,6 @@
         "projectPath": "C:\\Users\\navar\\.templateengine\\Books\\ProyectoSintaxisCs.csproj",
         "packagesPath": "C:\\Users\\navar\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\navar\\.templateengine\\Books\\obj\\",
->>>>>>> feature/models-libro
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
