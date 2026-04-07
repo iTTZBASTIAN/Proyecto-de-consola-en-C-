@@ -1,4 +1,0 @@
-primera parte del proyecto de sintaxis en csharp, implementando menú interactivo 100% funcional con navegación real entre menús y submenús, lectura y validación básica de
-entradas, y opciones de volver / confirmar / salir.
-Cada opción del menú deberá invocar una función que solo imprime un mensaje descriptivo de la
-acción seleccionada (sin POO, sin colecciones reales, sin persistencia real).

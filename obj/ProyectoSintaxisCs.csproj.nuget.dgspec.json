@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\navar\\.templateengine\\ProyectoSintaxisCs\\ProyectoSintaxisCs.csproj": {}
+    "C:\\Users\\navar\\.templateengine\\Books\\ProyectoSintaxisCs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\navar\\.templateengine\\ProyectoSintaxisCs\\ProyectoSintaxisCs.csproj": {
+    "C:\\Users\\navar\\.templateengine\\Books\\ProyectoSintaxisCs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\navar\\.templateengine\\ProyectoSintaxisCs\\ProyectoSintaxisCs.csproj",
+        "projectUniqueName": "C:\\Users\\navar\\.templateengine\\Books\\ProyectoSintaxisCs.csproj",
         "projectName": "ProyectoSintaxisCs",
-        "projectPath": "C:\\Users\\navar\\.templateengine\\ProyectoSintaxisCs\\ProyectoSintaxisCs.csproj",
+        "projectPath": "C:\\Users\\navar\\.templateengine\\Books\\ProyectoSintaxisCs.csproj",
         "packagesPath": "C:\\Users\\navar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\navar\\.templateengine\\ProyectoSintaxisCs\\obj\\",
+        "outputPath": "C:\\Users\\navar\\.templateengine\\Books\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
