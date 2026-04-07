@@ -15,15 +15,13 @@ public static class Program
     };
     static List<Usuario> listaUsuarios = new List<Usuario>()
     {
-        new Usuario("Jose", "305-457820", true),
-        new Usuario("Joseluis", "314-34566", true),
-        new Usuario("Karim", "315-467752", true)
+        new Usuario("Jose", "305-457820", true, "2"),
+        new Usuario("Joseluis", "314-34566", true, "0"),
+        new Usuario("Karim", "315-467752", true, "3")
     };
     static List<bool> prestados = new List<bool> { true, false, true };
     static List<string> listaPrestamos = new List<string> { "cien años de soledad", "harry potter", ""};
     static List<string> EstadoPrestamos = new List<string> {"activo", "devuelto", "activo"};
-    static List<string> PrestamosPorUsuario = new List<string> {"2", "0", "3"};
-    static List<string> PrestamosPorLibro = new List<string> {"20", "15", "40"};
 
     public static void Main()
     {
@@ -204,7 +202,7 @@ public static void MostrarMenuLibros()
                     string nuevoUsuario = Console.ReadLine() ??"" ;
                     if (!string.IsNullOrWhiteSpace(nuevoUsuario))
                     {
-                        listaUsuarios.Add(new Usuario(nuevoUsuario, "Sin contacto", true));
+                        listaUsuarios.Add(new Usuario(nuevoUsuario, "Sin contacto", true, "0"));
                         Console.WriteLine("¡Usuario registrado con éxito!");
                     }
                     break;
@@ -578,7 +576,7 @@ public static void MostrarMenuLibros()
                         bool encontrado = false;
                         for (int i = 0; i < listaUsuarios.Count; i++) {
                             if (listaUsuarios[i].Nombre.ToLower().Contains(busquedaUsuario)) {
-                                Console.WriteLine($"Usuario: {listaUsuarios[i].Nombre} | prestamos: {PrestamosPorUsuario[i]}");
+                                Console.WriteLine($"Usuario: {listaUsuarios[i].Nombre} | prestamos: {listaUsuarios[i].PrestamosAcumulados}");
                                 encontrado = true;
                             }
                         }
