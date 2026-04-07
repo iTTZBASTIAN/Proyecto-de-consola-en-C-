@@ -24,6 +24,7 @@ public static class Program
         new Prestamo(inventario[0], listaUsuarios[0]),
         new Prestamo(inventario[1], listaUsuarios[1])
         {
+
             Estado = EstadoPrestamo.Devuelto, 
             FechaDevolucion = DateTime.Now
         },
@@ -204,6 +205,7 @@ public static void MostrarMenuLibros()
             switch (opcionUsuario)
             {
                 case 1: 
+                    Console.Clear();
                     Console.Write("Escribe el nombre del nuevo usuario: ");
                     string nuevoUsuario = Console.ReadLine() ??"" ;
                     if (!string.IsNullOrWhiteSpace(nuevoUsuario))
@@ -237,7 +239,6 @@ public static void MostrarMenuLibros()
                         int indice = idBuscado - 1;
                         if (indice >= 0 && indice < listaUsuarios.Count)
                         {
-                            // Puedes usar el .ToString() que definimos en la clase Usuario
                             Console.WriteLine(listaUsuarios[indice].ToString());
                         }
                     }
@@ -305,141 +306,211 @@ public static void MostrarMenuLibros()
 
         } while (opcionUsuario != 0);
     }
-    public static void MenuPrestamos()
+public static void MenuPrestamos()
+{
+    int opcionPrestamos;
+
+    do
     {
-        int opcionPrestamos;
+        Console.Clear();
+        Console.WriteLine("================ PRESTAMOS ================");
+        Console.WriteLine("1. Crear prestamos");
+        Console.WriteLine("2. Listar prestamos");
+        Console.WriteLine("3. Ver detalle de préstamo (por ID)");
+        Console.WriteLine("4. Registrar devolución / Editar");
+        Console.WriteLine("5. Eliminar préstamo");
+        Console.WriteLine("0. Volver al menú principal");
+        Console.Write("Selecciona una opción: ");
 
-        do
+        if (!int.TryParse(Console.ReadLine(), out opcionPrestamos)) continue;
+
+        switch (opcionPrestamos)
         {
-            Console.WriteLine("================ PRESTAMOS ================");
-            Console.WriteLine("1. Crear prestamos");
-            Console.WriteLine("2. Listar prestamos");
-            Console.WriteLine("3. Ver detalle de préstamo (por ID)");
-            Console.WriteLine("4. Registrar devolución");
-            Console.WriteLine("5. Eliminar préstamo");
-            Console.WriteLine("0. Volver al menú principal");
-            Console.Write("Selecciona una opción: ");
+            case 1: // CREATE
+                CrearPrestamo();
+                break;
 
-            opcionPrestamos = Convert.ToInt32(Console.ReadLine());
+            case 2: // READ (Listar)
+                Console.Clear();
+                Console.WriteLine("\n--- Lista de Prestamos ---");
+                if (listaPrestamos.Count == 0) Console.WriteLine("No hay préstamos.");
+                for (int i = 0; i < listaPrestamos.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {listaPrestamos[i].LibroPrestado.Titulo} -> {listaPrestamos[i].UsuarioReceptor.Nombre} | [{listaPrestamos[i].Estado}]");
+                }
+                PausarContinuar();
+                break;
 
-            switch (opcionPrestamos)
-            {
-                case 1:
-                    Console.WriteLine("======= CREAR PRESTAMO =======");
-                    Console.WriteLine("======= VALIDACIONES: =======");
-                    Console.WriteLine("1. usuario existe y está activo");
-                    Console.WriteLine("2. libro existe y está disponible");
-                    break;
-                case 2:
-                    Console.Clear();
-                    Console.WriteLine("\n--- Lista de Prestamos ---");
-                    for (int i = 0; i < listaPrestamos.Count; i++)
-                    {
-                        string estado = listaPrestamos[i].Estado.ToString();
-                        Console.WriteLine($"{i + 1}. {listaPrestamos[i].LibroPrestado.Titulo} - Usuario: {listaPrestamos[i].UsuarioReceptor.Nombre} | Estado: {estado}");
-                    }
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 3:
-                    Console.Clear();
-                    if (listaPrestamos.Count == 0)
-                    {
-                        Console.WriteLine("No hay prestamos registrados.");
-                    }
-                    else
-                    {
-                        Console.Write($"Ingresa el ID (1 al {listaPrestamos.Count}): ");
-                        if (int.TryParse(Console.ReadLine(), out int idBuscado))
-                        {
-                            int indice = idBuscado - 1;
-                            if (indice >= 0 && indice < listaPrestamos.Count)
-                            {
-                                Console.WriteLine("\n-------------------------------------------");
-                                Console.WriteLine($"ID: {idBuscado}");
-                                Console.WriteLine($"Libro prestado:  {listaPrestamos[indice].LibroPrestado.Titulo.ToUpper()}");
-                                Console.WriteLine($"Contacto: {listaUsuarios[indice].Contacto}");
-                                string estadoPrestamo = listaPrestamos[indice].Estado.ToString();
-                                Console.WriteLine($"Estado:          {listaPrestamos[indice].Estado}");
-                                Console.WriteLine("-------------------------------------------");
-                            }
-                        }
-                    }
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 4:
-                    Console.Clear();
-                    Console.WriteLine("========== REGISTRAR DEVOLUCION ==========");
+            case 3: 
+                VerDetallePrestamo();
+                break;
 
-                    for (int i = 0; i < listaPrestamos.Count; i++)
-                    {
-                        Console.WriteLine($"{i + 1}. {listaPrestamos[i]}");
-                    }
+            case 4: 
+                RegistrarDevolucion();
+                break;
 
-                    Console.Write("\nIngresa el ID del prestamo que deseas editar: ");
-                    if (int.TryParse(Console.ReadLine(), out int idEditar))
-                    {
-                        int indice = idEditar - 1;
+            case 5: // DELETE
+                EliminarPrestamo();
+                break;
+        }
+    } while (opcionPrestamos != 0);
+}
+static void VerDetallePrestamo()
+{
+    Console.Clear();
+    Console.WriteLine("======= DETALLE DE PRÉSTAMO =======");
 
-                        if (indice >= 0 && indice < listaPrestamos.Count)
-                        {
-                            Console.Clear();
-                            // REEMPLAZO: Accedemos al título del libro para el encabezado
-                            Console.WriteLine($"$Editando préstamo de: {listaPrestamos[indice].LibroPrestado.Titulo.ToUpper()}");
-                            Console.WriteLine("1. Cambiar estado (Devuelto/Activo)");
-                            Console.WriteLine("0. Cancelar");
-                            Console.Write("Selecciona qué deseas hacer: ");
-
-                            string subOpcionEdit = Console.ReadLine() ?? "";
-
-                            switch (subOpcionEdit)
-                            {
-                                case "1":
-                                    // Lógica para alternar el estado
-                                    if (listaPrestamos[indice].Estado == EstadoPrestamo.Activo)
-                                    {
-                                        listaPrestamos[indice].Estado = EstadoPrestamo.Devuelto;
-                                        listaPrestamos[indice].FechaDevolucion = DateTime.Now; // Registramos cuándo volvió
-                                        listaPrestamos[indice].LibroPrestado.Disponible = true; // El libro vuelve a estar libre
-                                    }
-                                    else
-                                    {
-                                        listaPrestamos[indice].Estado = EstadoPrestamo.Activo;
-                                        listaPrestamos[indice].FechaDevolucion = null; // Volvió a salir, quitamos fecha de devolución
-                                        listaPrestamos[indice].LibroPrestado.Disponible = false; // El libro vuelve a estar ocupado
-                                    }
-
-                                    string nuevoEstado = listaPrestamos[indice].Estado == EstadoPrestamo.Activo ? "Activo" : "Devuelto";
-                                    Console.WriteLine($"¡Estado cambiado a {nuevoEstado}!");
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error: El ID no existe.");
-                        }
-                    } 
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 5:
-                    Console.Clear();
-                    Console.WriteLine("======= ELIMINAR PRESTAMO =======");
-                    Console.WriteLine("Reglas sugeridas");
-                    Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    break;
-                case 0:
-                    Console.WriteLine("Saliendo...");
-                    break;
-            }
-        } while (opcionPrestamos != 0);
+    if (listaPrestamos.Count == 0)
+    {
+        Console.WriteLine("No hay préstamos registrados actualmente.");
     }
+    else
+    {
+
+        for (int i = 0; i < listaPrestamos.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {listaPrestamos[i].LibroPrestado.Titulo}");
+        }
+
+        Console.Write($"\nIngresa el ID (1 al {listaPrestamos.Count}): ");
+        
+        if (int.TryParse(Console.ReadLine(), out int idBuscado))
+        {
+            int indice = idBuscado - 1;
+
+            if (indice >= 0 && indice < listaPrestamos.Count)
+            {
+                var p = listaPrestamos[indice]; 
+
+                Console.WriteLine("\n-------------------------------------------");
+                Console.WriteLine($"ID:              {idBuscado}");
+                Console.WriteLine($"Libro:           {p.LibroPrestado.Titulo.ToUpper()}");
+                Console.WriteLine($"Usuario:         {p.UsuarioReceptor.Nombre}");
+                Console.WriteLine($"Contacto:        {p.UsuarioReceptor.Contacto}");
+                Console.WriteLine($"Fecha Salida:    {p.FechaSalida:dd/MM/yyyy}");
+                Console.WriteLine($"Estado actual:   {p.Estado}");
+                
+                if (p.FechaDevolucion != null)
+                    Console.WriteLine($"Fecha Devolución: {p.FechaDevolucion:dd/MM/yyyy}");
+                
+                Console.WriteLine("-------------------------------------------");
+            }
+            else
+            {
+                Console.WriteLine("❌ Error: Ese ID no existe.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("❌ Error: Debes ingresar un número válido.");
+        }
+    }
+    
+    Console.WriteLine("\nPresiona cualquier tecla para volver...");
+    Console.ReadKey();
+}
+static void CrearPrestamo()
+{
+    Console.Clear();
+    Console.WriteLine("======= CREAR NUEVO PRÉSTAMO =======");
+
+    Console.WriteLine("\nUsuarios registrados:");
+    for (int i = 0; i < listaUsuarios.Count; i++)
+    {
+        Console.WriteLine($"{i}. {listaUsuarios[i].Nombre} (Estado: {(listaUsuarios[i].Activo ? "Activo" : "Inactivo")})");
+    }
+    Console.Write("\nSelecciona el índice del usuario: ");
+    if (!int.TryParse(Console.ReadLine(), out int indiceUsuario)) return;
+
+    Console.WriteLine("\nLibros en inventario:");
+    for (int i = 0; i < inventario.Count; i++)
+    {
+        string disp = inventario[i].Disponible ? "Disponible" : "Prestado";
+        Console.WriteLine($"{i}. {inventario[i].Titulo} - [{disp}]");
+    }
+    Console.Write("\nSelecciona el índice del libro: ");
+    if (!int.TryParse(Console.ReadLine(), out int indiceLibro)) return;
+
+    if (indiceUsuario >= 0 && indiceUsuario < listaUsuarios.Count && 
+        indiceLibro >= 0 && indiceLibro < inventario.Count)
+    {
+        Usuario usuarioSel = listaUsuarios[indiceUsuario];
+        Libro libroSel = inventario[indiceLibro];
+
+        if (!usuarioSel.Activo)
+        {
+            Console.WriteLine("Error: El usuario no está activo.");
+        }
+        else if (!libroSel.Disponible)
+        {
+            Console.WriteLine("Error: El libro ya está prestado.");
+        }
+        else
+        {
+            Prestamo nuevoPrestamo = new Prestamo(libroSel, usuarioSel);
+            listaPrestamos.Add(nuevoPrestamo);
+            libroSel.Disponible = false;
+            Console.WriteLine($"\n✅ ¡Préstamo creado con éxito!");
+        }
+    }
+    Console.WriteLine("\nPresiona cualquier tecla para volver...");
+    Console.ReadKey();
+}
+static void RegistrarDevolucion()
+{
+    Console.Clear();
+    Console.WriteLine("========== REGISTRAR DEVOLUCION ==========");
+    for (int i = 0; i < listaPrestamos.Count; i++)
+        Console.WriteLine($"{i + 1}. {listaPrestamos[i].LibroPrestado.Titulo} ({listaPrestamos[i].Estado})");
+
+    Console.Write("\nID del préstamo a editar: ");
+    if (int.TryParse(Console.ReadLine(), out int id) && (id - 1) >= 0 && (id - 1) < listaPrestamos.Count)
+    {
+        var p = listaPrestamos[id - 1];
+        if (p.Estado == EstadoPrestamo.Activo)
+        {
+            p.Estado = EstadoPrestamo.Devuelto;
+            p.FechaDevolucion = DateTime.Now;
+            p.LibroPrestado.Disponible = true;
+            Console.WriteLine("✅ Libro devuelto con éxito.");
+        }
+        else
+        {
+            p.Estado = EstadoPrestamo.Activo;
+            p.FechaDevolucion = null;
+            p.LibroPrestado.Disponible = false;
+            Console.WriteLine("🔄 Préstamo reactivado.");
+        }
+    }
+    PausarContinuar();
+}
+
+static void EliminarPrestamo()
+{
+    Console.Clear();
+    Console.WriteLine("======= ELIMINAR REGISTRO DE PRESTAMO =======");
+    for (int i = 0; i < listaPrestamos.Count; i++)
+        Console.WriteLine($"{i + 1}. {listaPrestamos[i].LibroPrestado.Titulo}");
+
+    Console.Write("\nIngresa el ID del préstamo a eliminar para siempre: ");
+    if (int.TryParse(Console.ReadLine(), out int id) && (id - 1) >= 0 && (id - 1) < listaPrestamos.Count)
+    {
+        var p = listaPrestamos[id - 1];
+        
+        // Regla de seguridad: Si se elimina un préstamo activo, el libro debe volver a estar disponible
+        if (p.Estado == EstadoPrestamo.Activo) p.LibroPrestado.Disponible = true;
+
+        listaPrestamos.RemoveAt(id - 1);
+        Console.WriteLine("🗑️ Registro eliminado correctamente.");
+    }
+    PausarContinuar();
+}
+
+static void PausarContinuar()
+{
+    Console.WriteLine("\nPresiona cualquier tecla para continuar...");
+    Console.ReadKey();
+}
     public static void menuBusquedaYReportes()
     {
         int opcionBYR;
@@ -611,7 +682,6 @@ public static void MostrarMenuLibros()
                         string busquedaLibro = Console.ReadLine() ?? "".ToLower();
                         bool encontrado = false;
 
-                        // Cambiamos 'libros.Count' por 'inventario.Count'
                         for (int i = 0; i < inventario.Count; i++) 
                         {
 
