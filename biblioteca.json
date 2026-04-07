@@ -31,6 +31,22 @@
       "A\u00F1oPublicacion": "1597",
       "Disponible": true,
       "ConteoPrestamos": "0"
+    },
+    {
+      "Titulo": "Los juegos del hambre",
+      "Autor": "Suzanne Collins",
+      "Categoria": "ciencia ficcion",
+      "A\u00F1oPublicacion": "2008",
+      "Disponible": false,
+      "ConteoPrestamos": "0"
+    },
+    {
+      "Titulo": "Don quijote de la mancha",
+      "Autor": "Miguel de Cervantes",
+      "Categoria": "aventura",
+      "A\u00F1oPublicacion": "1605",
+      "Disponible": true,
+      "ConteoPrestamos": "0"
     }
   ],
   "Usuarios": [
@@ -51,6 +67,18 @@
       "Contacto": "315-467752",
       "Activo": true,
       "PrestamosAcumulados": "3"
+    },
+    {
+      "Nombre": "Sebastian",
+      "Contacto": "123-456-7556",
+      "Activo": true,
+      "PrestamosAcumulados": "0"
+    },
+    {
+      "Nombre": "Gabriela",
+      "Contacto": "123-346-5664",
+      "Activo": true,
+      "PrestamosAcumulados": "0"
     }
   ],
   "Prestamos": [
@@ -91,6 +119,25 @@
       "FechaSalida": "2026-04-06T22:59:08.3326356-05:00",
       "FechaDevolucion": "2026-04-06T22:59:08.3326379-05:00",
       "Estado": 1
+    },
+    {
+      "LibroPrestado": {
+        "Titulo": "Los juegos del hambre",
+        "Autor": "Suzanne Collins",
+        "Categoria": "ciencia ficcion",
+        "A\u00F1oPublicacion": "2008",
+        "Disponible": false,
+        "ConteoPrestamos": "0"
+      },
+      "UsuarioReceptor": {
+        "Nombre": "Gabriela",
+        "Contacto": "123-346-5664",
+        "Activo": true,
+        "PrestamosAcumulados": "0"
+      },
+      "FechaSalida": "2026-04-06T23:05:14.4431852-05:00",
+      "FechaDevolucion": null,
+      "Estado": 0
     }
   ]
 }
