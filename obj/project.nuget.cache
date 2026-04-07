@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "nvzZ+jJpxm4=",
-  "success": true,
-  "projectFilePath": "C:\\Users\\navar\\.templateengine\\system-books\\ProyectoSintaxisCs.csproj",
-=======
   "dgSpecHash": "qs9cQWjqph4=",
   "success": true,
   "projectFilePath": "C:\\Users\\navar\\.templateengine\\Books\\ProyectoSintaxisCs.csproj",
->>>>>>> feature/models-libro
   "expectedPackageFiles": [],
   "logs": []
 }

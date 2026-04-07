@@ -13,14 +13,15 @@ public static class Program
         new Libro("el hobbit", "J. R. R. Tolkien", "fantasia", "1937", "15"),
         new Libro("harry potter", "J. K. Rowling", "fantasia", "1997", "40")
     };
+    static List<Usuario> listaUsuarios = new List<Usuario>()
+    {
+        new Usuario("Jose", "305-457820", true, "2"),
+        new Usuario("Joseluis", "314-34566", true, "0"),
+        new Usuario("Karim", "315-467752", true, "3")
+    };
     static List<bool> prestados = new List<bool> { true, false, true };
-    static List<string> usuarios = new List<string> { "Jose", "Joseluis", "Karim" };
-    static List<string> contactos = new List<string> { "305-457820", "314-34566", "315-467752" };
-    static List<bool> activos = new List<bool> { true, true, true };
     static List<string> listaPrestamos = new List<string> { "cien años de soledad", "harry potter", ""};
     static List<string> EstadoPrestamos = new List<string> {"activo", "devuelto", "activo"};
-    static List<string> PrestamosPorUsuario = new List<string> {"2", "0", "3"};
-    static List<string> PrestamosPorLibro = new List<string> {"20", "15", "40"};
 
     public static void Main()
     {
@@ -201,9 +202,7 @@ public static void MostrarMenuLibros()
                     string nuevoUsuario = Console.ReadLine() ??"" ;
                     if (!string.IsNullOrWhiteSpace(nuevoUsuario))
                     {
-                        usuarios.Add(nuevoUsuario);
-                        contactos.Add("Sin contacto");
-                        activos.Add(true);
+                        listaUsuarios.Add(new Usuario(nuevoUsuario, "Sin contacto", true, "0"));
                         Console.WriteLine("¡Usuario registrado con éxito!");
                     }
                     break;
@@ -211,53 +210,47 @@ public static void MostrarMenuLibros()
                 case 2:
                     Console.Clear();
                     Console.WriteLine("\n--- Lista de Usuarios ---");
-                    for (int i = 0; i < usuarios.Count; i++)
+                    for (int i = 0; i < listaUsuarios.Count; i++)
                     {
-
-                        string estado = activos[i] ? "[Activo]" : "[Inactivo]";
-                        Console.WriteLine($"{i + 1}. {usuarios[i]} - {contactos[i]} {estado}");
+                        string estado = listaUsuarios[i].Activo ? "[Activo]" : "[Inactivo]";
+                        Console.WriteLine($"{i + 1}. {listaUsuarios[i].Nombre} - {listaUsuarios[i].Contacto} {estado}");
                     }
                     break;
 
                 case 3:
                     Console.Clear();
-                    if (usuarios.Count == 0)
+                if (listaUsuarios.Count == 0) 
+                {
+                    Console.WriteLine("No hay usuarios registrados.");
+                }
+                else 
+                {
+                    Console.Write($"Ingresa el ID (1 al {listaUsuarios.Count}): ");
+                    if (int.TryParse(Console.ReadLine(), out int idBuscado))
                     {
-                        Console.WriteLine("No hay usuarios registrados.");
-                    }
-                    else
-                    {
-                        Console.Write($"Ingresa el ID (1 al {usuarios.Count}): ");
-                        if (int.TryParse(Console.ReadLine(), out int idBuscado))
+                        int indice = idBuscado - 1;
+                        if (indice >= 0 && indice < listaUsuarios.Count)
                         {
-                            int indice = idBuscado - 1;
-                            if (indice >= 0 && indice < usuarios.Count)
-                            {
-
-                                Console.WriteLine("\n------------------------------------");
-                                Console.WriteLine($"ID: {idBuscado}");
-                                Console.WriteLine($"Usuario:  {usuarios[indice].ToUpper()}");
-                                Console.WriteLine($"Contacto: {contactos[indice]}");
-                                Console.WriteLine($"Estado:   {(activos[indice] ? "Activo" : "Inactivo")}");
-                                Console.WriteLine("------------------------------------");
-                            }
+                            // Puedes usar el .ToString() que definimos en la clase Usuario
+                            Console.WriteLine(listaUsuarios[indice].ToString());
                         }
                     }
+                }
                     break;
 
                 case 4:
                     Console.Clear();
                     Console.WriteLine("========== ACTUALIZAR USUARIO ==========");
-                    for (int i = 0; i < usuarios.Count; i++)
+                    for (int i = 0; i < listaUsuarios.Count; i++)
                     {
-                        Console.WriteLine($"{i + 1}. {usuarios[i]}");
+                        Console.WriteLine($"{i + 1}. {listaUsuarios[i].Nombre}");
                     }
 
                     Console.Write("\nID a editar: ");
                     if (int.TryParse(Console.ReadLine(), out int idEditar))
                     {
                         int indice = idEditar - 1;
-                        if (indice >= 0 && indice < usuarios.Count)
+                        if (indice >= 0 && indice < listaUsuarios.Count)
                         {
                             Console.WriteLine("1. Nombre | 2. Contacto | 3. Estado | 0. Salir");
                             string subOpcion = Console.ReadLine() ?? "";
@@ -265,14 +258,16 @@ public static void MostrarMenuLibros()
                             {
                                 case "1":
                                     Console.Write("Nuevo nombre: ");
-                                    usuarios[indice] = Console.ReadLine() ?? "";
+                                    listaUsuarios[indice].Nombre = Console.ReadLine() ?? ""; 
                                     break;
+
                                 case "2":
                                     Console.Write("Nuevo contacto: ");
-                                    contactos[indice] = Console.ReadLine() ?? "";
+                                    listaUsuarios[indice].Contacto = Console.ReadLine() ?? ""; 
                                     break;
+
                                 case "3":
-                                    activos[indice] = !activos[indice];
+                                    listaUsuarios[indice].Activo = !listaUsuarios[indice].Activo; 
                                     Console.WriteLine("Estado cambiado.");
                                     break;
                             }
@@ -360,7 +355,7 @@ public static void MostrarMenuLibros()
                                 Console.WriteLine("\n------------------------------------");
                                 Console.WriteLine($"ID: {idBuscado}");
                                 Console.WriteLine($"Libro prestado:  {listaPrestamos[indice].ToUpper()}");
-                                Console.WriteLine($"Contacto: {contactos[indice]}");
+                                Console.WriteLine($"Contacto: {listaUsuarios[indice].Contacto}");
                                 Console.WriteLine($"Estado:   {(EstadoPrestamos[indice])}");
                                 Console.WriteLine("------------------------------------");
                             }
@@ -529,9 +524,9 @@ public static void MostrarMenuLibros()
                         Console.Write("Ingrese el nombre de usuario: ");
                         string busquedaUsuario = Console.ReadLine() ?? "".ToLower();
                         bool encontrado = false;
-                        for (int i = 0; i < usuarios.Count; i++) {
-                            if (usuarios[i].ToLower().Contains(busquedaUsuario)) {
-                                Console.WriteLine($"Usuario: {usuarios[i]} | Contacto: {contactos[i]}");
+                        for (int i = 0; i < listaUsuarios.Count; i++) {
+                            if (listaUsuarios[i].Nombre.ToLower().Contains(busquedaUsuario)) {
+                                Console.WriteLine($"Usuario: {listaUsuarios[i].Nombre} | Contacto: {listaUsuarios[i].Contacto}");
                                 encontrado = true;
                             }
                         }
@@ -542,15 +537,15 @@ public static void MostrarMenuLibros()
                     else if (subOpcionUsuario == "2")
                     {
                         Console.Clear();
-                        Console.Write($"Ingrese el ID (1 al {usuarios.Count}): ");
+                        Console.Write($"Ingrese el ID (1 al {listaUsuarios.Count}): ");
                         if (int.TryParse(Console.ReadLine(), out int idBuscado)) {
                             int indice = idBuscado - 1;
-                            if (indice >= 0 && indice < usuarios.Count) {
+                            if (indice >= 0 && indice < listaUsuarios.Count) {
                                 Console.WriteLine("\nUsuario encontrado:");
                                 Console.WriteLine($"-----------------------");
                                 Console.WriteLine($"ID:      {idBuscado}"); 
-                                Console.WriteLine($"Usuario:  {usuarios[indice]}");
-                                Console.WriteLine($"Contacto:   {contactos[indice]}");
+                                Console.WriteLine($"Usuario:  {listaUsuarios[indice]}");
+                                Console.WriteLine($"Contacto:   {listaUsuarios[indice].Contacto}");
                                 Console.WriteLine($"-----------------------");
                                 Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                                 Console.ReadKey();
@@ -579,9 +574,9 @@ public static void MostrarMenuLibros()
                         Console.Write("Ingrese el nombre del usuario: ");
                         string busquedaUsuario = Console.ReadLine() ?? "".ToLower();
                         bool encontrado = false;
-                        for (int i = 0; i < usuarios.Count; i++) {
-                            if (usuarios[i].ToLower().Contains(busquedaUsuario)) {
-                                Console.WriteLine($"Usuario: {usuarios[i]} | prestamos: {PrestamosPorUsuario[i]}");
+                        for (int i = 0; i < listaUsuarios.Count; i++) {
+                            if (listaUsuarios[i].Nombre.ToLower().Contains(busquedaUsuario)) {
+                                Console.WriteLine($"Usuario: {listaUsuarios[i].Nombre} | prestamos: {listaUsuarios[i].PrestamosAcumulados}");
                                 encontrado = true;
                             }
                         }
