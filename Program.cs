@@ -19,9 +19,17 @@ public static class Program
         new Usuario("Joseluis", "314-34566", true, "0"),
         new Usuario("Karim", "315-467752", true, "3")
     };
-    static List<bool> prestados = new List<bool> { true, false, true };
-    static List<string> listaPrestamos = new List<string> { "cien años de soledad", "harry potter", ""};
-    static List<string> EstadoPrestamos = new List<string> {"activo", "devuelto", "activo"};
+    static List<Prestamo> listaPrestamos = new List<Prestamo>()
+    {
+        new Prestamo(inventario[0], listaUsuarios[0]),  
+        new Prestamo(inventario[1], listaUsuarios[1]) 
+        { 
+            Activo = false, 
+            FechaDevolucion = DateTime.Now 
+        },
+        
+        new Prestamo(inventario[2], listaUsuarios[2])
+    };
 
     public static void Main()
     {
@@ -329,9 +337,8 @@ public static void MostrarMenuLibros()
                     Console.WriteLine("\n--- Lista de Prestamos ---");
                     for (int i = 0; i < listaPrestamos.Count; i++)
                     {
-
-                        string estado = EstadoPrestamos[i];
-                        Console.WriteLine($"{i + 1}. {listaPrestamos[i]} - {EstadoPrestamos[i]}");
+                        string estado = listaPrestamos[i].Activo ? "Activo" : "Devuelto";
+                        Console.WriteLine($"{i + 1}. {listaPrestamos[i].LibroPrestado.Titulo} - Usuario: {listaPrestamos[i].UsuarioReceptor.Nombre} | Estado: {estado}");
                     }
                     Console.WriteLine("\nPresiona cualquier tecla para volver al menú...");
                     Console.ReadKey();
@@ -351,13 +358,13 @@ public static void MostrarMenuLibros()
                             int indice = idBuscado - 1;
                             if (indice >= 0 && indice < listaPrestamos.Count)
                             {
-
-                                Console.WriteLine("\n------------------------------------");
+                                Console.WriteLine("\n-------------------------------------------");
                                 Console.WriteLine($"ID: {idBuscado}");
-                                Console.WriteLine($"Libro prestado:  {listaPrestamos[indice].ToUpper()}");
+                                Console.WriteLine($"Libro prestado:  {listaPrestamos[indice].LibroPrestado.Titulo.ToUpper()}");
                                 Console.WriteLine($"Contacto: {listaUsuarios[indice].Contacto}");
-                                Console.WriteLine($"Estado:   {(EstadoPrestamos[indice])}");
-                                Console.WriteLine("------------------------------------");
+                                string estadoPrestamo = listaPrestamos[indice].Activo ? "Activo" : "Devuelto";
+                                Console.WriteLine($"Estado:          {estadoPrestamo}");
+                                Console.WriteLine("-------------------------------------------");
                             }
                         }
                     }
@@ -382,18 +389,32 @@ public static void MostrarMenuLibros()
                         if (indice >= 0 && indice < listaPrestamos.Count)
                         {
                             Console.Clear();
-                            Console.WriteLine($"Editando: {listaPrestamos[indice].ToUpper()}");
+                            // REEMPLAZO: Accedemos al título del libro para el encabezado
+                            Console.WriteLine($"$Editando préstamo de: {listaPrestamos[indice].LibroPrestado.Titulo.ToUpper()}");
                             Console.WriteLine("1. Cambiar estado (Devuelto/Activo)");
                             Console.WriteLine("0. Cancelar");
                             Console.Write("Selecciona qué deseas hacer: ");
-                            
+
                             string subOpcionEdit = Console.ReadLine() ?? "";
 
                             switch (subOpcionEdit)
                             {
                                 case "1":
-                                    EstadoPrestamos[indice] = EstadoPrestamos[indice]; 
-                                    string nuevoEstado = EstadoPrestamos[indice];
+                                    // Lógica para alternar el estado
+                                    if (listaPrestamos[indice].Activo)
+                                    {
+                                        listaPrestamos[indice].Activo = false;
+                                        listaPrestamos[indice].FechaDevolucion = DateTime.Now; // Registramos cuándo volvió
+                                        listaPrestamos[indice].LibroPrestado.Disponible = true; // El libro vuelve a estar libre
+                                    }
+                                    else
+                                    {
+                                        listaPrestamos[indice].Activo = true;
+                                        listaPrestamos[indice].FechaDevolucion = null; // Volvió a salir, quitamos fecha de devolución
+                                        listaPrestamos[indice].LibroPrestado.Disponible = false; // El libro vuelve a estar ocupado
+                                    }
+
+                                    string nuevoEstado = listaPrestamos[indice].Activo ? "Activo" : "Devuelto";
                                     Console.WriteLine($"¡Estado cambiado a {nuevoEstado}!");
                                     break;
                             }
@@ -617,7 +638,7 @@ public static void MostrarMenuLibros()
 
                         for (int i = 0; i < inventario.Count; i++)
                         {
-                            string estado = prestados[i] ? "Prestado" : "Disponible";
+                            string estado = inventario[i].Disponible ? "Disponible" : "Prestado";
                             Console.WriteLine($"{i + 1}. {inventario[i].Titulo.PadRight(25)} | Estado: {estado}");
                         }
 
